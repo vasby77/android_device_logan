@@ -19,7 +19,8 @@ TARGET_BOOTLOADER_BOARD_NAME := hawaii
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyS0,115200n8 mem=456M gpt v3d_mem=67108864 pmem=24M@0x9E800000
+BOARD_KERNEL_CMDLINE :=
+#BOARD_KERNEL_CMDLINE := console=ttyS0,115200n8 mem=456M gpt v3d_mem=67108864 pmem=24M@0x9E800000
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
@@ -48,7 +49,7 @@ BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
 BOARD_HOSTAPD_DRIVER        := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB   := lib_driver_cmd_bcmdhd
 BOARD_WLAN_DEVICE           := bcmdhd
-BOARD_WLAN_DEVICE_REV       := bcm4330_b1
+BOARD_WLAN_DEVICE_REV       := bcm4330
 WIFI_DRIVER_FW_PATH_PARAM   := "/sys/module/dhd/parameters/firmware_path"
 WIFI_DRIVER_FW_PATH_STA     := "/system/etc/wifi/bcmdhd_sta.bin"
 WIFI_DRIVER_FW_PATH_AP      := "/system/etc/wifi/bcmdhd_apsta.bin"
@@ -57,9 +58,8 @@ WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                   := 802_11_ABG
-
-# Wi-Fi Tethering
-BOARD_HAVE_SAMSUNG_WIFI := true
+BOARD_NO_WIFI_HAL           := true
+BOARD_HAVE_SAMSUNG_WIFI     := true
 
 # Resolution
 TARGET_SCREEN_HEIGHT := 800
@@ -70,13 +70,23 @@ USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/samsung/logan/configs/egl.cfg
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DEGL_NEEDS_FNW -DHAWAII_HWC
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DEGL_NEEDS_FNW -DHAWAII_HWC -DSAMSUNG_CAMERA_LEGACY -DSAMSUNG_CODEC_SUPPORT 
 TARGET_USES_ION := true
 HWUI_COMPILE_FOR_PERF := true
 
+# libwvm.so
+COMMON_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
+
+# OMX
+BOARD_HAVE_CODEC_SUPPORT := SAMSUNG_CODEC_SUPPORT
+COMMON_GLOBAL_CFLAGS += -DSAMSUNG_OMX
+BOARD_NONBLOCK_MODE_PROCESS := true
+BOARD_USE_STOREMETADATA := true
+BOARD_USE_METADATABUFFERTYPE := true
+BOARD_USES_MFC_FPS := true
+
 # Audio
 BOARD_USES_ALSA_AUDIO := true
-#BOARD_USE_SAMSUNG_SEPARATEDSTREAM := true
 
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -93,7 +103,7 @@ BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
 
 # Recovery
-TARGET_RECOVERY_INITRC := device/samsung/logan/ramdisk/recovery/init.recovery.rc
+#TARGET_RECOVERY_INITRC := 
 TARGET_RECOVERY_FSTAB := device/samsung/logan/ramdisk/fstab.hawaii_ss_logan
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 BOARD_HAS_NO_SELECT_BUTTON := true

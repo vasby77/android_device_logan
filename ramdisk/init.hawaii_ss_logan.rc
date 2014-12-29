@@ -38,7 +38,9 @@ on init
 # To store widevine keybox
     symlink /data/app /factory
 	symlink /efs /factory
-	symlink /dev/block/mmcblk0p11 /dev/block/param    
+	symlink /dev/block/mmcblk0p11 /dev/block/param  
+
+	stop ril-daemon	
 
 on post-fs-data
 # we will remap this as /storage/sdcard with the sdcard fuse tool
@@ -553,7 +555,7 @@ on property:ro.debuggable=1
 		group system
 
 # RILD
-	service ril-daemon /system/bin/rild
+	service hawaii-ril-daemon /system/bin/rild
 		class main
 		socket rild stream 660 root radio
 		socket rild1 stream 660 root radio
