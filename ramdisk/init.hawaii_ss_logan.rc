@@ -305,7 +305,7 @@ on boot
     chmod 0660 /data/local.prop
 
 # SEC_PRODUCT_FEATURE_COMMON_USE_MULTISIM
-    setprop ro.multisim.simslotcount 1
+    setprop ro.multisim.simslotcount 2
 	
 	chown radio system /sys/power/cpufreq_table
     chown radio system /sys/power/cpufreq_max_limit
