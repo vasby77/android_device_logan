@@ -41,7 +41,7 @@ PRODUCT_COPY_FILES += \
 #        device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
 
 # Insecure ADBD
-#ADDITIONAL_DEFAULT_PROPERTIES += \
+ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=3 \
 	persist.sys.root_access=3 \
 	persist.service.adb.enable=1
@@ -69,7 +69,6 @@ PRODUCT_PACKAGES += \
 # Device-specific packages
 PRODUCT_PACKAGES += \
 	libsecril-client \
-	libsecril-client-sap \
 	SamsungServiceMode \
 	Torch
 
