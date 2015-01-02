@@ -41,9 +41,10 @@ PRODUCT_COPY_FILES += \
 #        device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
 
 # Insecure ADBD
-#ro.adb.secure=0 ro.secure=0
+#ro.adb.secure=3
 ADDITIONAL_DEFAULT_PROPERTIES += \
-	ro.adb.secure=3 \
+	ro.adb.secure=0 \
+	ro.secure=0 \
 	persist.sys.root_access=3 \
 	persist.service.adb.enable=1
 
