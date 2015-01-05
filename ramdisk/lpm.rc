@@ -20,3 +20,6 @@ on boot
 
 	service ueventd /sbin/ueventd
     	critical
+		
+	service battery_charger /charger
+		class charger	
