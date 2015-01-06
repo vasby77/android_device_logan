@@ -71,7 +71,6 @@ PRODUCT_PACKAGES += \
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
-	libsecril-client \
 	SamsungServiceMode \
 	Torch
 
