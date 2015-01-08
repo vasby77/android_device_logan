@@ -689,8 +689,5 @@ on property:dev.bootcomplete=1
 	service startadb /system/etc/startadb.sh
 		oneshot
 
-	service battery_charger /charger
-		class charger
-
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
