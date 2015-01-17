@@ -6,7 +6,6 @@ on early-init
     mkdir /efs 0771 radio system
 
 on init
-	
 # See storage config details at http://source.android.com/tech/storage/
 	mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
@@ -70,8 +69,8 @@ on post-fs-data
  # permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
-	chown bluetooth net_bt_stack /dev/ttyS3
-    chmod 0600 /dev/ttyS3
+	chown bluetooth net_bt_stack /dev/ttyS0
+    chmod 0600 /dev/ttyS0
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/type
@@ -294,8 +293,8 @@ on boot
     chown radio radio /dev/bcm_gps
 
 #for bluetooth. permission for host interface
-    chown root bluetooth /dev/ttyS3
-    chmod 0777 /dev/ttyS3
+    chown root bluetooth /dev/ttyS0
+    chmod 0777 /dev/ttyS0
     
 #for fm radio    
     copy /system/etc/local.prop /data/local.prop
