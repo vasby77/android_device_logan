@@ -17,6 +17,8 @@ on boot
 	class_start default
 	
 	service ueventd /sbin/ueventd
-    	critical	
+    	critical
+
+	service adbd /sbin/adbd		
 		
 	service battery_charger /charger
