@@ -34,7 +34,7 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1395654656
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2189426688
 BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_FLASH_BLOCK_SIZE := 4096
+BOARD_FLASH_BLOCK_SIZE := 24567
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
@@ -59,7 +59,6 @@ WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                   := 802_11_ABG
-BOARD_NO_WIFI_HAL           := true
 BOARD_HAVE_SAMSUNG_WIFI     := true
 
 # Resolution
@@ -94,7 +93,6 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_ALLOW_SUSPEND_IN_CHARGER := true
-CHARGER_DISABLE_INIT_BLANK := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 BOARD_BATTERY_DEVICE_NAME := "battery"
 
@@ -112,6 +110,12 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
+BOARD_HAS_NO_MISC_PARTITION := true
+BOARD_RECOVERY_HANDLES_MOUNT := true
+BOARD_USES_MMCUTILS := false
+BOARD_RECOVERY_ALWAYS_WIPES := false
+BOARD_SUPPRESS_EMMC_WIPE := true
+
 
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
