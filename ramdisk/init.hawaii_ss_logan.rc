@@ -681,7 +681,7 @@ on property:dev.bootcomplete=1
 		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
 		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
 		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-		chmod 220 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
 		write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 666666
 		write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 70
 		write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 6000
