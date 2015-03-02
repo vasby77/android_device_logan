@@ -19,6 +19,9 @@ on boot
 	service ueventd /sbin/ueventd
     	critical
 
-	service adbd /sbin/adbd		
+	service adbd /sbin/adbd	
+
+	service healthd-charger /sbin/healthd -n
+		critical
 		
 	service battery_charger /charger
