@@ -47,6 +47,8 @@
 /dev/mm_v3d               0666   system     graphics
 /dev/mm_isp               0660   system     camera
 /dev/mm_isp2              0660   system     camera
+/dev/mm_isp2              0666   system     camera
+/dev/bcm_jpeg             0660   system     camera
 /dev/mm_interlock         0666   system     graphics
 /dev/mm_h264              0660   media      media
 
@@ -65,4 +67,9 @@
 # /dev/sec_user_dump        0660   system     shell  
 
 # SYSTEM Status
-/dev/block/mmcblk0p11        0660   system     root  
+/dev/block/mmcblk0p11        0660   system     root 
+ 
+/dev/mem		  		     0660	system     root
+
+/dev/ttyGS0		  		     0660	system     system
+/dev/snd/controlC0	  	     0660	system     audio

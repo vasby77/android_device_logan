@@ -6,7 +6,6 @@ on early-init
     mkdir /efs 0771 radio system
 
 on init
-	
 # See storage config details at http://source.android.com/tech/storage/
 	mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
@@ -24,10 +23,10 @@ on init
 	mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
 	mkdir /storage/sdcard1 0700 root root
 	
-	mkdir /storage/usbdisk 0775 system system
-	export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk0
-	mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
-	mkdir /storage/usbdisk0 0700 root root
+	#mkdir /storage/usbdisk 0775 system system
+	#export SECONDARY_STORAGE /storage/usbdisk0
+	#mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
+	#mkdir /storage/usbdisk0 0700 root root
 	
 	# for backwards compatibility
     #symlink /storage/sdcard1 /external_sd
@@ -40,7 +39,7 @@ on init
 	symlink /efs /factory
 	symlink /dev/block/mmcblk0p11 /dev/block/param
 
-	stop ril-daemon	
+	mkdir /preload 0771 system system 	
 
 on post-fs-data
 # we will remap this as /storage/sdcard with the sdcard fuse tool
@@ -220,7 +219,7 @@ on boot
     chmod 0660 /dev/bcm_audio_log
     chown system system /dev/ttyGS0
     chown system system /dev/ttyGS2
-    chown system system /dev/ttyS0
+    #chown system system /dev/ttyS0
     chown system system /dev/ttyS2
     chmod 0666 /dev/ttyS2
 	
@@ -270,6 +269,9 @@ on boot
 
 # phone
     setprop ro.telephony.call_ring.multiple 0
+	
+# Enable dithering algorithm
+    setprop fb.force.dithering 1	
 
 # permissions for gps.
 	mkdir /data/gps 0770 gps system
@@ -296,8 +298,8 @@ on boot
     chown radio radio /dev/bcm_gps
 
 #for bluetooth. permission for host interface
-    chown root bluetooth /dev/ttyS0
-    chmod 0777 /dev/ttyS0
+    #chown root bluetooth /dev/ttyS0
+    #chmod 0777 /dev/ttyS0
     
 #for fm radio    
     copy /system/etc/local.prop /data/local.prop
@@ -321,6 +323,10 @@ on boot
     chmod 0660 /sys/devices/system/cpu/cpufreq/pegasusq/max_cpu_lock
     chmod 0660 /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_lock
     chmod 0660 /sys/devices/system/cpu/busfreq/curr_freq	
+	
+# for ril_prop
+    chown radio radio /proc/LinuStoreIII/ril_prop
+    chmod 0664 /proc/LinuStoreIII/ril_prop
 		
 # Audio (Earjack)
     chown system radio /sys/class/audio/earjack/select_jack
@@ -442,6 +448,7 @@ on boot
 	on charger
 # set cpu governor to powersave while in charging mode
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
+
 # EHCI runtime enable for LPA
     write /sys/devices/platform/s5p-ehci/power/control auto
     
@@ -526,9 +533,21 @@ on post-fs
 	restorecon_recursive /efs
     chown radio system /efs
     chmod 0771 /efs
+	
+on property:persist.sys.storage_preload=1
+    mount ext4 /dev/block/mmcblk0p18 /preload nosuid nodev noatime wait ro
+    setprop storage.preload.complete 1
+
+on property:persist.sys.storage_preload=0
+    exec /system/bin/umount /preload 	
 
 on property:ro.debuggable=1
     start console
+	
+	service charger /sbin/healthd -c
+		class charger
+		critical
+		seclabel u:r:healthd:s0	
 	
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
@@ -542,9 +561,9 @@ on property:ro.debuggable=1
 		disabled
 
 #  usbdisk0 sdcard daemon running as media_rw (1023)	
-	service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
-		class late_start
-		disabled	
+	#service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
+	#	class late_start
+	#	disabled	
 
 # create filesystem if necessary
 	service setup_fs /system/bin/setup_fs \
@@ -562,18 +581,13 @@ on property:ro.debuggable=1
 		group system
 
 # RILD
-	service hawaii-ril-daemon /system/bin/rild
+	service ril-daemon /system/bin/rild
 		class main
 		socket rild stream 660 root radio
 		socket rild1 stream 660 root radio
 		socket rild-debug stream 660 radio system
 		user root
 		group radio cache inet misc audio system sdcard_rw log sdcard_r
-		
-	service charger /sbin/healthd -c
-		class charger
-		critical
-		seclabel u:r:healthd:s0	
 
 	service wpa_supplicant /system/bin/wpa_supplicant \
 		-iwlan0 -Dnl80211 -c/data/misc/wifi/wpa_supplicant.conf \
@@ -692,7 +706,7 @@ on property:dev.bootcomplete=1
 		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
 		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
 		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-		chmod 220 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
+		chmod 660 /sys/devices/system/cpu/cpufreq/interactive/boostpulse
 		write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 666666
 		write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 70
 		write /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay 6000
@@ -702,9 +716,6 @@ on property:dev.bootcomplete=1
 # adb
 	service startadb /system/etc/startadb.sh
 		oneshot
-
-	service battery_charger /charger
-		class charger
 
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0

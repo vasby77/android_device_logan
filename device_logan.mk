@@ -14,6 +14,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/fstab.hawaii_ss_logan:root/fstab.hawaii_ss_logan \
 	device/samsung/logan/ramdisk/init.hawaii_ss_logan.rc:root/init.hawaii_ss_logan.rc \
 	device/samsung/logan/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
+	device/samsung/logan/ramdisk/init.rc:root/init.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
 	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc \
 	device/samsung/logan/ramdisk/recovery/init.recovery.hawaii_ss_logan.rc:root/init.recovery.hawaii_ss_logan.rc
@@ -21,9 +22,12 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
 	device/samsung/logan/configs/media_profiles.xml:system/etc/media_profiles.xml \
 	device/samsung/logan/configs/audio_policy.conf:system/etc/audio_policy.conf \
+	device/samsung/logan/configs/tinyucm.conf:system/etc/tinyucm.conf \
+	device/samsung/logan/configs/default_gain.conf:system/etc/default_gain.conf \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+		frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
 	device/samsung/logan/configs/media_codecs.xml:system/etc/media_codecs.xml 
 
 # Prebuilt kl keymaps
@@ -38,39 +42,46 @@ PRODUCT_COPY_FILES += \
 #        device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
 
 # Insecure ADBD
-#ADDITIONAL_DEFAULT_PROPERTIES += \
-	ro.adb.secure=3 \
-	persist.sys.root_access=3
+#ro.adb.secure=3
+ADDITIONAL_DEFAULT_PROPERTIES += \
+	ro.adb.secure=0 \
+	ro.secure=0 \
+	persist.sys.root_access=3 \
+	persist.service.adb.enable=1
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-	setup_fs 
-	
-#
-PRODUCT_PACKAGES += \
-	libexifa \
-	libjpega
+	setup_fs \
+	e2fsck \
+	f2fstat \
+	fsck.f2fs \
+	fibmap.f2fs \
+	mkfs.f2fs
 		
 # Usb accessory
 PRODUCT_PACKAGES += \
 	com.android.future.usb.accessory
 
-# Audio modules
+# Misc other modules
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
-	audio.r_submix.default
-	
-USE_CUSTOM_AUDIO_POLICY := 1	
+	audio.r_submix.default \
+	audio.primary.default
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
+	libsecril-client \
 	SamsungServiceMode \
 	Torch
 
 # Charger
 PRODUCT_PACKAGES += \
 	charger_res_images
+	
+# KSM
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.ksm.default=1	
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
@@ -115,8 +126,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
     mobiledata.interfaces=rmnet0 \
     ro.telephony.ril_class=SamsungBCMRIL \
     ro.zygote.disable_gl_preload=true \
-	cm.updater.uri=http://lanserver.pp.ua/cm/ \
     persist.radio.multisim.config=none \
+	ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
 	ro.telephony.call_ring.multiple=0 \
 	ro.telephony.call_ring=0
     
@@ -137,9 +148,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
+	
+# Override phone-hdpi-512-dalvik-heap to match value on stock
+# - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)
+# (property override must come before included property)
+PRODUCT_PROPERTY_OVERRIDES += \
+	dalvik.vm.heapgrowthlimit=56m	
 
 # Dalvik heap config
-include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
+include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise

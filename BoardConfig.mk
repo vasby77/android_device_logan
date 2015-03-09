@@ -19,12 +19,16 @@ TARGET_BOOTLOADER_BOARD_NAME := hawaii
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 
 # Kernel
-BOARD_KERNEL_CMDLINE := console=ttyS0,115200n8 mem=456M gpt v3d_mem=67108864 pmem=24M@0x9E800000
+BOARD_KERNEL_CMDLINE :=
+#BOARD_KERNEL_CMDLINE := console=ttyS0,115200n8 mem=456M gpt v3d_mem=67108864 pmem=24M@0x9E800000
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
+#TARGET_GCC_VERSION_EXP := 4.8
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_defconfig
-TARGET_KERNEL_SOURCE := device/samsung/logan/kernel
+TARGET_KERNEL_SOURCE := device/samsung/logands/kernel
+
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # PARTITION SIZE
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
@@ -33,15 +37,11 @@ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1395654656
 BOARD_USERDATAIMAGE_PARTITION_SIZE := 2189426688
 BOARD_CACHEIMAGE_PARTITION_SIZE := 209715200
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
-BOARD_FLASH_BLOCK_SIZE := 131072
-
-# Include an expanded selection of fonts
-EXTENDED_FONT_FOOTPRINT := true
+BOARD_FLASH_BLOCK_SIZE := 262144 #BOARD_KERNEL_PAGESIZE * 64
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_BCM := true
-BOARD_HAVE_SAMSUNG_BLUETOOTH := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/logan/bluetooth
 BOARD_BLUEDROID_VENDOR_CONF := device/samsung/logan/bluetooth/libbt_vndcfg_s7270.txt
 
@@ -62,10 +62,7 @@ WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                   := 802_11_ABG
-BOARD_NO_WIFI_HAL           := true
-
-# Wi-Fi Tethering
-BOARD_HAVE_SAMSUNG_WIFI := true
+BOARD_HAVE_SAMSUNG_WIFI     := true
 
 # Resolution
 TARGET_SCREEN_HEIGHT := 800
@@ -80,6 +77,15 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DEGL_NEEDS_FNW -DHAWAII_HWC
 TARGET_USES_ION := true
 HWUI_COMPILE_FOR_PERF := true
 
+# libutils
+COMMON_GLOBAL_CFLAGS += -DREFBASE_JB_MR1_COMPAT_SYMBOLS
+
+# libwvm.so
+COMMON_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
+
+# opengl
+BOARD_USE_BGRA_8888 := true
+
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 
@@ -89,13 +95,17 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Charger
 BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_ALLOW_SUSPEND_IN_CHARGER := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+BOARD_BATTERY_DEVICE_NAME := "battery"
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 
 # RIL
+BOARD_VENDOR := samsung
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
+PRODUCT_PACKAGES += com.android.services.telephony.common
 
 # Recovery
 #TARGET_RECOVERY_INITRC := device/samsung/logan/ramdisk/recovery/init.recovery.rc
@@ -105,6 +115,11 @@ BOARD_HAS_NO_SELECT_BUTTON := true
 BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
+BOARD_HAS_NO_MISC_PARTITION := true
+BOARD_RECOVERY_HANDLES_MOUNT := true
+BOARD_USES_MMCUTILS := false
+BOARD_RECOVERY_ALWAYS_WIPES := false
+BOARD_SUPPRESS_EMMC_WIPE := true
 
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/

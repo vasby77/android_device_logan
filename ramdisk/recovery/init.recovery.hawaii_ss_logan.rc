@@ -1,2 +1,2 @@
-on init
-    mkdir /efs
+#on init
+#    mkdir /efs
