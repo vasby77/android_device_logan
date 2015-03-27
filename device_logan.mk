@@ -20,8 +20,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
 	device/samsung/logan/ramdisk/lpm.rc:root/lpm.rc \
-	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc \
-	device/samsung/logan/ramdisk/recovery/init.recovery.hawaii_ss_logan.rc:root/init.recovery.hawaii_ss_logan.rc
+	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc
 
 PRODUCT_COPY_FILES += \
 	device/samsung/logan/configs/media_profiles.xml:system/etc/media_profiles.xml \
@@ -67,6 +66,7 @@ PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default \
+	libaudio-resampler \
 	audio.primary.default
 
 # Device-specific packages
@@ -82,6 +82,7 @@ PRODUCT_PACKAGES += \
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
+	frameworks/native/data/etc/android.hardware.bluetooth.xml:system/etc/permissions/android.hardware.bluetooth.xml \
 	frameworks/native/data/etc/android.hardware.bluetooth_le.xml:system/etc/permissions/android.hardware.bluetooth_le.xml \
 	frameworks/native/data/etc/android.hardware.camera.front.xml:system/etc/permissions/android.hardware.camera.front.xml \
 	frameworks/native/data/etc/android.hardware.camera.flash-autofocus.xml:system/etc/permissions/android.hardware.camera.flash-autofocus.xml \
@@ -137,6 +138,37 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
+	
+# KSM
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.ksm.default=1
+
+# Stagefright
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.enable-player=true \
+    media.stagefright.enable-meta=false \
+    media.stagefright.enable-scan=true \
+    media.stagefright.enable-http=true \
+    media.stagefright.enable-fma2dp=true \
+    media.stagefright.enable-aac=true \
+    media.stagefright.enable-qcp=true
+
+# Enable AAC 5.1 output
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.aac_51_output_enabled=true
+
+# Input resampling configuration
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.input.noresample=1
+
+# Audio Configuration
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.audio.handset.mic.type=digital \
+    persist.audio.dualmic.config=endfire \
+    persist.audio.fluence.voicecall=true \
+    persist.audio.fluence.voicerec=false \
+    persist.audio.fluence.speaker=false \
+    af.resampler.quality=4	
 	
 # Override phone-hdpi-512-dalvik-heap to match value on stock
 # - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)

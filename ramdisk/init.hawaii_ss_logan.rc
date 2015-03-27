@@ -2,7 +2,7 @@ import init.bcm2166x.usb.rc
 import init.log.rc
 
 on early-init
-	loglevel 9
+	loglevel 7
     mkdir /efs 0771 radio system
 
 on init
@@ -251,7 +251,7 @@ on boot
 
 # BCMPMU drivers
     chown -R system system /sys/devices/platform/bcmpmu*/*
-# */
+
 # change owner of mtest system to allow atx/atxd to write this file:
     chown system system /sys/kernel/sysrpc/mtest
 
@@ -436,7 +436,7 @@ on boot
    write /sys/block/zram0/initstate 1
 
 # serial_no permission change
-    touch /efs/FactoryApp/serial_no
+    #touch /efs/FactoryApp/serial_no
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
     
