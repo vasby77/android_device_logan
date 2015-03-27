@@ -13,6 +13,8 @@ on boot
 
 # EHCI runtime enable for LPA
 	write /sys/devices/platform/s5p-ehci/power/control auto
+	
+	write /sys/class/power_supply/battery/batt_lp_charging 1
 
 	class_start default
 	
