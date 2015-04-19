@@ -79,9 +79,9 @@ PRODUCT_PACKAGES += \
 	Torch
 
 # Charger
-PRODUCT_PACKAGES += \
-	charger \
-	charger_res_images
+#PRODUCT_PACKAGES += \
+#	charger \
+#	charger_res_images
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
