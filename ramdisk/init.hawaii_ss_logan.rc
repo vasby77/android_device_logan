@@ -23,10 +23,10 @@ on init
 	mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
 	mkdir /storage/sdcard1 0700 root root
 	
-	mkdir /storage/usbdisk 0775 system system
-	export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk0
-	mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
-	mkdir /storage/usbdisk0 0700 root root
+	#mkdir /storage/usbdisk 0775 system system
+	#export SECONDARY_STORAGE /storage/usbdisk0
+	#mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
+	#mkdir /storage/usbdisk0 0700 root root
 	
 	# for backwards compatibility
     #symlink /storage/sdcard1 /external_sd
@@ -37,7 +37,9 @@ on init
 # To store widevine keybox
     symlink /data/app /factory
 	symlink /efs /factory
-	symlink /dev/block/mmcblk0p11 /dev/block/param  
+	symlink /dev/block/mmcblk0p11 /dev/block/param
+
+	#mkdir /preload 0771 system system 	
 
 on post-fs-data
 # we will remap this as /storage/sdcard with the sdcard fuse tool
@@ -267,6 +269,9 @@ on boot
 
 # phone
     setprop ro.telephony.call_ring.multiple 0
+	
+# Enable dithering algorithm
+    setprop fb.force.dithering 1	
 
 # permissions for gps.
 	mkdir /data/gps 0770 gps system
@@ -436,7 +441,6 @@ on boot
    write /sys/block/zram0/initstate 1
 
 # serial_no permission change
-    #touch /efs/FactoryApp/serial_no
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
     
@@ -520,6 +524,13 @@ on fs
 on post-fs
     chown radio system /efs
     chmod 0771 /efs
+	
+#on property:persist.sys.storage_preload=1
+#    mount ext4 /dev/block/mmcblk0p18 /preload nosuid nodev noatime wait ro
+#    setprop storage.preload.complete 1
+
+#on property:persist.sys.storage_preload=0
+#    exec /system/bin/umount /preload 	
 
 on property:ro.debuggable=1
     start console
@@ -536,9 +547,9 @@ on property:ro.debuggable=1
 		disabled
 
 #  usbdisk0 sdcard daemon running as media_rw (1023)	
-	service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
-		class late_start
-		disabled	
+	#service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
+	#	class late_start
+	#	disabled	
 
 # create filesystem if necessary
 	service setup_fs /system/bin/setup_fs \

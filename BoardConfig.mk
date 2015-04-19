@@ -22,7 +22,7 @@ TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 BOARD_KERNEL_CMDLINE :=
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_defconfig
+TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
@@ -61,7 +61,6 @@ WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                   := 802_11_ABG
-BOARD_HAVE_SAMSUNG_WIFI     := true
 
 # Resolution
 TARGET_SCREEN_HEIGHT := 800
@@ -77,7 +76,7 @@ HWUI_COMPILE_FOR_PERF := true
 TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC
 
-# opengl
+# Opengl
 BOARD_USE_BGRA_8888 := true
 
 # Audio
@@ -85,9 +84,9 @@ BOARD_USES_ALSA_AUDIO := true
 
 # Optimisations
 #TARGET_USE_SCORPIAN_BIONIC_OPTIMIZATION := true
-TARGET_CORTEX_CACHE_LINE_32 := true
-ARCH_ARM_HIGH_OPTIMIZATION := true
-ARCH_ARM_HIGH_OPTIMIZATION_COMPAT := true
+#TARGET_CORTEX_CACHE_LINE_32 := true
+#ARCH_ARM_HIGH_OPTIMIZATION := true
+#ARCH_ARM_HIGH_OPTIMIZATION_COMPAT := true
 #ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
 
 # Enable dex-preoptimization to speed up the first boot sequence
@@ -99,12 +98,12 @@ ifeq ($(HOST_OS),linux)
 endif
 
 # Add h/w acceleration in browser
-ENABLE_WEBGL := true
-WITH_JIT := true
-ENABLE_JSC_JIT := true
-JS_ENGINE := v8
-HTTP := chrome
-TARGET_FORCE_CPU_UPLOAD := true
+#ENABLE_WEBGL := true
+#WITH_JIT := true
+#ENABLE_JSC_JIT := true
+#JS_ENGINE := v8
+#HTTP := chrome
+#TARGET_FORCE_CPU_UPLOAD := true
 
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -113,8 +112,8 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 # Charger
 #BOARD_CHARGER_ENABLE_SUSPEND := true
 #BOARD_ALLOW_SUSPEND_IN_CHARGER := true
-BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
-BOARD_BATTERY_DEVICE_NAME := "battery"
+#BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+#BOARD_BATTERY_DEVICE_NAME := "battery"
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii

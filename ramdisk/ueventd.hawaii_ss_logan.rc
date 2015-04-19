@@ -53,21 +53,21 @@
 # for h/w codec
 /dev/brcm_h264	          0660   media      media
 
-#Permission for NV partition 
-/dev/block/mmcblk0p1		0770	radio	system
-
-# for RIL to be able to open Kernel RPC drivers
-/dev/bcm_rpc		  0660	 radio	    radio
-/dev/bcm_irpc		  0660	 radio	    radio
-/dev/bcm_atc		  0660	 shell	    system
-
-# SEC User Dump
-# /dev/sec_user_dump        0660   system     shell  
+# Permission for NV partition 
+/dev/block/mmcblk0p1	  0770	 radio	    system
 
 # SYSTEM Status
-/dev/block/mmcblk0p11        0660   system     root 
+/dev/block/mmcblk0p11     0660   system     root 
 
-/dev/mem		  		     0660	system     root
+# for RIL to be able to open Kernel RPC drivers
+/dev/bcm_rpc		      0660	 radio	    radio
+/dev/bcm_irpc		      0660	 radio	    radio
+/dev/bcm_atc		      0660	 shell	    system
 
-/dev/ttyGS0		  		     0660	system     system
-/dev/snd/controlC0	  	     0660	system     audio
+# SEC User Dump
+# /dev/sec_user_dump      0660   system     shell  
+
+/dev/mem		  		  0660	 system     root
+
+/dev/ttyGS0		  		  0660	 system     system
+/dev/snd/controlC0	  	  0660	 system     audio
