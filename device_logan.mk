@@ -72,6 +72,7 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	audio.r_submix.default \
 	libaudio-resampler \
+	audio_policy.hawaii \
 	audio.primary.default
 
 # Device-specific packages
