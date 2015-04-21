@@ -220,14 +220,14 @@ on boot
     chown system system /dev/ttyGS0
     chown system system /dev/ttyGS2
     #chown system system /dev/ttyS0
-    chown system system /dev/ttyS2
-    chmod 0666 /dev/ttyS2
+    chown gps system /dev/ttyS2
+    chmod 0770 /dev/ttyS2
 	
 	chmod 0644 /proc/cmdline
 
 # GPS UART
-    chown system system /dev/ttyS1
-    chmod 0660 /dev/ttyS1
+    chown gps system /dev/ttyS1
+    chmod 0770 /dev/ttyS1
 
     chown system system /proc/bcm_fuse_net_config
 
@@ -253,7 +253,7 @@ on boot
 
 # BCMPMU drivers
     chown -R system system /sys/devices/platform/bcmpmu*/*
-
+# */
 # change owner of mtest system to allow atx/atxd to write this file:
     chown system system /sys/kernel/sysrpc/mtest
 
@@ -309,30 +309,27 @@ on boot
 # SEC_PRODUCT_FEATURE_COMMON_USE_MULTISIM
     setprop ro.multisim.simslotcount 1
 	
-	chown radio system /sys/power/cpufreq_table
-    chown radio system /sys/power/cpufreq_max_limit
-    chown radio system /sys/power/cpufreq_min_limit
-    chown radio system /sys/devices/system/cpu/cpufreq/pegasusq/max_cpu_lock
-    chown radio system /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_lock
-    chown radio system /sys/devices/system/cpu/busfreq/curr_freq
-    chmod 0660 /sys/power/cpufreq_table
-    chmod 0660 /sys/power/cpufreq_max_limit
-    chmod 0660 /sys/power/cpufreq_min_limit
-    chmod 0660 /sys/class/power_supply/battery/siop_activated
-    chmod 0660 /sys/class/power_supply/battery/siop_level
-    chmod 0660 /sys/devices/system/cpu/cpufreq/pegasusq/max_cpu_lock
-    chmod 0660 /sys/devices/system/cpu/cpufreq/pegasusq/hotplug_lock
-    chmod 0660 /sys/devices/system/cpu/busfreq/curr_freq	
-	
-# for ril_prop
-    chown radio radio /proc/LinuStoreIII/ril_prop
+#    # for multi csc
+    chown radio radio /proc/LinuStoreIII/efs_info 
+    chmod 0664 /proc/LinuStoreIII/efs_info
+#    # for protecting key string
+    chown radio radio /proc/LinuStoreIII/keystr 
+    chmod 0664 /proc/LinuStoreIII/keystr
+#    # for ril_prop
+    chown radio radio /proc/LinuStoreIII/ril_prop 
     chmod 0664 /proc/LinuStoreIII/ril_prop
+#    # for fsbuild_check
+    chown radio radio /proc/LinuStoreIII/fsbuild_check 
+    chmod 0664 /proc/LinuStoreIII/fsbuild_check
+#    # for recovery_opts
+    chown system radio /proc/LinuStoreIII/recovery_opts 
+    chmod 0664 /proc/LinuStoreIII/recovery_opts
 		
 # Audio (Earjack)
     chown system radio /sys/class/audio/earjack/select_jack
     chown system radio /sys/class/audio/earjack/key_state
     chown system radio /sys/class/audio/earjack/state
-    chown media system /sys/class/audio/earjack/reselect_jack 
+    chown media system /sys/class/audio/earjack/reselect_jack  
 
 # Battery node
     chown system radio /sys/class/power_supply/battery/batt_charging_source
