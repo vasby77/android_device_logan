@@ -139,6 +139,9 @@ BOARD_USES_MMCUTILS := false
 BOARD_RECOVERY_ALWAYS_WIPES := false
 BOARD_SUPPRESS_EMMC_WIPE := true
 
+BOARD_HAVE_FM_RADIO := true
+BOARD_FM_DEVICE := bcm4329
+
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
 
