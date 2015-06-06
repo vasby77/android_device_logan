@@ -36,7 +36,7 @@
 #include <errno.h>
 
 #include "utils/Log.h"
-#include "hardware/fmradio.h"
+#include "fmradio.h"
 
 #define LOGD ALOGD
 #define LOGE ALOGE
