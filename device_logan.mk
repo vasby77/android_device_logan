@@ -36,8 +36,9 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
 
 # Copy Apps
-#PRODUCT_COPY_FILES += \
 # 	device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
+PRODUCT_COPY_FILES += \
+	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
 # Insecure ADBD
 # (ro.adb.secure=3)
