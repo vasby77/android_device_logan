@@ -37,8 +37,8 @@ PRODUCT_COPY_FILES += \
 
 # Copy Apps
 # 	device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
-PRODUCT_COPY_FILES += \
-	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
+#PRODUCT_COPY_FILES += \
+#	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
 # Insecure ADBD
 # (ro.adb.secure=3)
@@ -46,7 +46,7 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
 	ro.secure=0 \
 	persist.sys.root_access=3 \
-	persist.service.adb.enable=1
+	persist.service.adb.enable=0
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
