@@ -44,8 +44,6 @@ PRODUCT_COPY_FILES += \
 # (ro.adb.secure=3)
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
-	ro.secure=0 \
-	persist.sys.root_access=3 \
 	persist.service.adb.enable=0
 
 # KSM
