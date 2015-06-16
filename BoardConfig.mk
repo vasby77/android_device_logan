@@ -25,7 +25,7 @@ BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 #TARGET_GCC_VERSION_EXP := 4.8
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
-TARGET_KERNEL_SOURCE := device/samsung/logands/kernel
+TARGET_KERNEL_SOURCE := device/samsung/logan/kernel
 
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
@@ -95,18 +95,13 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Charger
-BOARD_CHARGER_ENABLE_SUSPEND := true
-BOARD_ALLOW_SUSPEND_IN_CHARGER := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
-BOARD_BATTERY_DEVICE_NAME := "battery"
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 
 # RIL
-BOARD_VENDOR := samsung
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
-PRODUCT_PACKAGES += com.android.services.telephony.common
 
 # Recovery
 #TARGET_RECOVERY_INITRC := device/samsung/logan/ramdisk/recovery/init.recovery.rc

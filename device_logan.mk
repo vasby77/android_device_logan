@@ -17,17 +17,16 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/init.rc:root/init.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
 	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc \
+	device/samsung/logan/ramdisk/charger:root/charger \
 	device/samsung/logan/ramdisk/recovery/init.recovery.hawaii_ss_logan.rc:root/init.recovery.hawaii_ss_logan.rc
 
 PRODUCT_COPY_FILES += \
 	device/samsung/logan/configs/media_profiles.xml:system/etc/media_profiles.xml \
 	device/samsung/logan/configs/audio_policy.conf:system/etc/audio_policy.conf \
-	device/samsung/logan/configs/tinyucm.conf:system/etc/tinyucm.conf \
-	device/samsung/logan/configs/default_gain.conf:system/etc/default_gain.conf \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
-		frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
 	device/samsung/logan/configs/media_codecs.xml:system/etc/media_codecs.xml 
 
 # Prebuilt kl keymaps
@@ -42,11 +41,8 @@ PRODUCT_COPY_FILES += \
 #        device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
 
 # Insecure ADBD
-#ro.adb.secure=3
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
-	ro.secure=0 \
-	persist.sys.root_access=3 \
 	persist.service.adb.enable=1
 
 # Filesystem management tools
@@ -71,7 +67,6 @@ PRODUCT_PACKAGES += \
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
-	libsecril-client \
 	SamsungServiceMode \
 	Torch
 
@@ -128,6 +123,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.zygote.disable_gl_preload=true \
     persist.radio.multisim.config=none \
 	ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
+	cm.updater.uri=http://get.ace3.tk \
 	ro.telephony.call_ring.multiple=0 \
 	ro.telephony.call_ring=0
     
