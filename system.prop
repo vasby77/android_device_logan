@@ -20,10 +20,9 @@ net.streaming.rtsp.uaprof=http://wap.samsungmobile.com/uaprof/
 
 ro.opengles.version=131072
 debug.hwui.render_dirty_regions=false
-brcm.graphics.async_errors=false
+brcm.graphics.async_errors=true
 brcm.hwc.no-hdmi-trans=1
 
 ro.ril.hsxpa=1
 ro.ril.gprsclass=10
-persist.sys.dataprefer.simid=0
 ro.com.google.gmsversion=4.1_r4

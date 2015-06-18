@@ -12,5 +12,3 @@ allow rild block_device:dir search;
 
 # /proc/bcm_fuse_net_config
 allow rild proc:file write;
-allow rild gps_device:chr_file rw_file_perms;
-allow rild block_device:chr_file rw_file_perms;

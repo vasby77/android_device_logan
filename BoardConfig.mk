@@ -27,9 +27,6 @@ BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
 TARGET_KERNEL_SOURCE := device/samsung/logan/kernel
 
-# Include an expanded selection of fonts
-EXTENDED_FONT_FOOTPRINT := true
-
 # PARTITION SIZE
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 8388608
@@ -46,7 +43,8 @@ BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := device/samsung/logan/bluetooth
 BOARD_BLUEDROID_VENDOR_CONF := device/samsung/logan/bluetooth/libbt_vndcfg_s7270.txt
 
 # Connectivity - Wi-Fi
-WPA_BUILD_SUPPLICANT := true
+BOARD_HAVE_SAMSUNG_WIFI     := true
+WPA_BUILD_SUPPLICANT 		:= true
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 WPA_SUPPLICANT_VERSION      := VER_0_8_X
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_bcmdhd
@@ -62,21 +60,22 @@ WIFI_DRIVER_MODULE_NAME     := "dhd"
 WIFI_DRIVER_MODULE_ARG      := "firmware_path=/system/etc/wifi/bcmdhd_sta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_DRIVER_MODULE_AP_ARG   := "firmware_path=/system/etc/wifi/bcmdhd_apsta.bin nvram_path=/system/etc/wifi/nvram_net.txt"
 WIFI_BAND                   := 802_11_ABG
-BOARD_HAVE_SAMSUNG_WIFI     := true
 
 # Resolution
 TARGET_SCREEN_HEIGHT := 800
 TARGET_SCREEN_WIDTH := 480
 
 # Hardware rendering
-USE_OPENGL_RENDERER := true
 BOARD_EGL_CFG := device/samsung/logan/configs/egl.cfg
+USE_OPENGL_RENDERER := true
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
-COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC
-BOARD_EGL_NEEDS_FNW := true
 TARGET_USES_ION := true
 HWUI_COMPILE_FOR_PERF := true
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC
+
+# Include an expanded selection of fonts
+EXTENDED_FONT_FOOTPRINT := true
 
 # libutils
 COMMON_GLOBAL_CFLAGS += -DREFBASE_JB_MR1_COMPAT_SYMBOLS
@@ -90,12 +89,23 @@ BOARD_USE_BGRA_8888 := true
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 
+# Enable dex-preoptimization to speed up the first boot sequence
+# of an SDK AVD. Note that this operation only works on Linux for now
+ifeq ($(HOST_OS),linux)
+  ifeq ($(WITH_DEXPREOPT),)
+    WITH_DEXPREOPT := true
+  endif
+endif
+
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Charger
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+
+# Sensor
+SENSORS_NEED_SETRATE_ON_ENABLE := true
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
@@ -104,7 +114,7 @@ BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
 
 # Recovery
-#TARGET_RECOVERY_INITRC := device/samsung/logan/ramdisk/recovery/init.recovery.rc
+#TARGET_RECOVERY_INITRC := 
 TARGET_RECOVERY_FSTAB := device/samsung/logan/ramdisk/fstab.hawaii_ss_logan
 TARGET_USE_CUSTOM_LUN_FILE_PATH := "/sys/class/android_usb/android0/f_mass_storage/lun%d/file"
 BOARD_HAS_NO_SELECT_BUTTON := true
@@ -139,6 +149,8 @@ BOARD_SEPOLICY_UNION += \
     service_contexts \
     bkmgrd.te \
     device.te \
+	surfaceflinger.te \
+	bluetooth.te \
     geomagneticd.te \
     gpsd.te \
     init.te \
@@ -147,7 +159,6 @@ BOARD_SEPOLICY_UNION += \
     macloader.te \
     rild.te \
     shell.te \
-    system_app.te \
     system_server.te \
     tvserver.te \
     vclmk.te

@@ -79,29 +79,11 @@ Only the three quirks included above are recognized at this point:
 	<Include href="media_codecs_google_audio.xml" />
     <Include href="media_codecs_google_telephony.xml" />
     <Decoders>
-        <MediaCodec name="OMX.brcm.video.mpeg4.hw.decoder" type="video/mp4v-es">
-			<Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-		<MediaCodec name="OMX.brcm.video.vc1.hw.decoder" type="video/asf">
-			<Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-		<MediaCodec name="OMX.brcm.video.vc1.hw.decoder" type="video/wvc1">
-			<Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-		<MediaCodec name="OMX.brcm.video.vc1.hw.decoder" type="video/x-ms-wmv">
-			<Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-		<MediaCodec name="OMX.brcm.video.vc1.hw.decoder" type="video/wmv1">
-			<Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
-		<MediaCodec name="OMX.brcm.video.vc1.hw.decoder" type="video/wmv3">
-			<Quirk name="requires-allocate-on-output-ports" />
-        </MediaCodec>
 		<MediaCodec name="OMX.brcm.video.h264.hw.decoder" type="video/avc">
 			<Quirk name="requires-allocate-on-input-ports" />
 		</MediaCodec>
     </Decoders>
-
+	
     <Encoders>
 		<MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc"/>
     </Encoders>

@@ -12,13 +12,14 @@ DEVICE_PACKAGE_OVERLAYS += device/samsung/logan/overlay
 # Init files
 PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/fstab.hawaii_ss_logan:root/fstab.hawaii_ss_logan \
+	device/samsung/logan/ramdisk/init.rc:root/init.rc \
 	device/samsung/logan/ramdisk/init.hawaii_ss_logan.rc:root/init.hawaii_ss_logan.rc \
 	device/samsung/logan/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
-	device/samsung/logan/ramdisk/init.rc:root/init.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
-	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc \
-	device/samsung/logan/ramdisk/charger:root/charger
-
+	device/samsung/logan/ramdisk/lpm.rc:root/lpm.rc \
+	device/samsung/logan/ramdisk/charger:root/charger \
+	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc
+	
 PRODUCT_COPY_FILES += \
 	device/samsung/logan/configs/media_profiles.xml:system/etc/media_profiles.xml \
 	device/samsung/logan/configs/audio_policy.conf:system/etc/audio_policy.conf \
@@ -37,12 +38,12 @@ PRODUCT_COPY_FILES += \
 
 # Copy Apps
 #PRODUCT_COPY_FILES += \
-#        device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
+#	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
-	persist.service.adb.enable=1
+	persist.service.adb.enable=0
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
