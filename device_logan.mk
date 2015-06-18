@@ -17,8 +17,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/init.rc:root/init.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
 	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc \
-	device/samsung/logan/ramdisk/charger:root/charger \
-	device/samsung/logan/ramdisk/recovery/init.recovery.hawaii_ss_logan.rc:root/init.recovery.hawaii_ss_logan.rc
+	device/samsung/logan/ramdisk/charger:root/charger
 
 PRODUCT_COPY_FILES += \
 	device/samsung/logan/configs/media_profiles.xml:system/etc/media_profiles.xml \
@@ -70,10 +69,6 @@ PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	Torch
 
-# Charger
-PRODUCT_PACKAGES += \
-	charger_res_images
-	
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.ksm.default=1	
