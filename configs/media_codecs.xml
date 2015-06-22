@@ -86,6 +86,7 @@ Only the three quirks included above are recognized at this point:
 	
     <Encoders>
 		<MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc"/>
+		<MediaCodec name="OMX.brcm.audio.aac.encoder" type="audio/mp4a-latm" />
     </Encoders>
 	<Include href="media_codecs_google_video.xml" />
 	<Include href="media_codecs_ffmpeg.xml" />

@@ -492,10 +492,10 @@ service logd /system/bin/logd
     socket logdw dgram 0222 logd logd
     seclabel u:r:logd:s0
 
-service healthd /sbin/healthd
-    class core
-    critical
-    seclabel u:r:healthd:s0
+#service healthd /sbin/healthd
+#    class core
+#    critical
+#    seclabel u:r:healthd:s0
 
 service console /system/bin/sh
     class core
