@@ -703,5 +703,5 @@ on property:dev.bootcomplete=1
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
 		
-service battery_charger /charger
-    class charger		
+#service battery_charger /charger
+#    class charger		

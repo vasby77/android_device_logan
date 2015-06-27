@@ -87,7 +87,8 @@ COMMON_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 BOARD_USE_BGRA_8888 := true
 
 # Audio
-#BOARD_USES_ALSA_AUDIO := true
+BOARD_USES_ALSA_AUDIO := true
+BOARD_HAVE_PRE_KITKAT_AUDIO_BLOB := true
 
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
@@ -102,6 +103,8 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Charger
+BOARD_CHARGER_ENABLE_SUSPEND := true
+#BOARD_ALLOW_SUSPEND_IN_CHARGER := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 
 # Sensor

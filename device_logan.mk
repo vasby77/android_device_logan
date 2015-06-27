@@ -40,6 +40,10 @@ PRODUCT_COPY_FILES += \
 #PRODUCT_COPY_FILES += \
 #	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
+# Charger
+PRODUCT_PACKAGES += \
+	charger_res_images
+
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
@@ -63,7 +67,9 @@ PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default \
-	audio.primary.default
+	audio.primary.default \
+	libaudioutils \
+    libtinyalsa
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
