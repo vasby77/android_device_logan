@@ -89,6 +89,8 @@ BOARD_USE_BGRA_8888 := true
 # Audio
 BOARD_USES_LEGACY_ALSA_AUDIO := true
 
+TRACK_BUFFER_TIMING := true
+
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
 #ifeq ($(HOST_OS),linux)
