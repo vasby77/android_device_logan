@@ -87,8 +87,7 @@ COMMON_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 BOARD_USE_BGRA_8888 := true
 
 # Audio
-BOARD_USES_ALSA_AUDIO := true
-BOARD_HAVE_PRE_KITKAT_AUDIO_BLOB := true
+BOARD_USES_LEGACY_ALSA_AUDIO := true
 
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
