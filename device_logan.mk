@@ -16,6 +16,8 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/init.hawaii_ss_logan.rc:root/init.hawaii_ss_logan.rc \
 	device/samsung/logan/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
+	device/samsung/logan/ramdisk/lpm.rc:root/lpm.rc \
+	device/samsung/logan/ramdisk/charger:root/charger \
 	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc
 	
 PRODUCT_COPY_FILES += \
@@ -39,8 +41,8 @@ PRODUCT_COPY_FILES += \
 #	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
 # Charger
-PRODUCT_PACKAGES += \
-	charger_res_images
+#PRODUCT_PACKAGES += \
+#	charger_res_images
 
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \

@@ -439,14 +439,7 @@ on boot
 # serial_no permission change
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
-	
-on charger
-# CPU Frequency Governor
-	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-
-# EHCI runtime enable for LPA
-	write /sys/devices/platform/s5p-ehci/power/control auto	
-    
+	  
 on fs
     mount_all /fstab.hawaii_ss_logan
     setprop ro.crypto.fuse_sdcard true
@@ -710,5 +703,5 @@ on property:dev.bootcomplete=1
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
 		
-#service battery_charger /charger
-#    class charger		
+service battery_charger /charger
+    class charger		
