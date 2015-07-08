@@ -520,7 +520,14 @@ on fs
 on post-fs
 	restorecon_recursive /efs
     chown radio system /efs
-    chmod 0771 /efs
+    chmod 0771 /efs	
+	
+on charger
+# CPU Frequency Governor
+	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
+
+# EHCI runtime enable for LPA
+	write /sys/devices/platform/s5p-ehci/power/control auto	
 	
 #on property:persist.sys.storage_preload=1
 #    mount ext4 /dev/block/mmcblk0p18 /preload nosuid nodev noatime wait ro
@@ -704,4 +711,17 @@ on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
 		
 service battery_charger /charger
-    class charger		
+    class charger
+	critical	
+	
+service playlpm /system/bin/playlpm
+	class charger
+    user root
+
+service immvibed /system/bin/immvibed
+	class charger
+	oneshot
+
+service lpmkey /system/bin/lpmkey
+	class charger
+    user root		
