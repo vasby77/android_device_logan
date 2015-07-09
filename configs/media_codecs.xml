@@ -85,13 +85,12 @@ Only the three quirks included above are recognized at this point:
     </Decoders>
 	
     <Encoders>
+		<!-- 
 		<MediaCodec name="OMX.brcm.video.h264.hw.encoder" type="video/avc" >
-			<Limit name="size" min="32x32" max="1280x720" />
-            <Limit name="alignment" value="2x2" />
-            <Limit name="block-size" value="16x16" />
-            <Limit name="blocks-per-second" min="1" max="489600" />
-            <Limit name="bitrate" range="1-9000000" />
+		<Feature name="store-metadata-in-buffers-output" value="0" />
+		<Feature name="store-metadata-in-buffers" value="0" />
 		</MediaCodec>
+		-->
 		<MediaCodec name="OMX.brcm.audio.aac.encoder" type="audio/mp4a-latm" />
     </Encoders>
 	<Include href="media_codecs_google_video.xml" />

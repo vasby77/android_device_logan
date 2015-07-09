@@ -712,16 +712,21 @@ on property:ro.dumpstate.dmesg=1
 		
 service battery_charger /charger
     class charger
-	critical	
+	critical
+	seclabel u:r:healthd:s0	
 	
 service playlpm /system/bin/playlpm
 	class charger
     user root
+	seclabel u:r:healthd:s0
 
 service immvibed /system/bin/immvibed
 	class charger
 	oneshot
+	user root
+	seclabel u:r:healthd:s0
 
 service lpmkey /system/bin/lpmkey
 	class charger
-    user root		
+    user root
+	seclabel u:r:healthd:s0
