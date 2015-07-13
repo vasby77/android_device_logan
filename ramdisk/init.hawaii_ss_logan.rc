@@ -439,7 +439,10 @@ on boot
 # serial_no permission change
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
-	  
+	
+on charger
+    write /sys/class/power_supply/battery/batt_lp_charging 1
+	
 on fs
     mount_all /fstab.hawaii_ss_logan
     setprop ro.crypto.fuse_sdcard true
@@ -522,13 +525,6 @@ on post-fs
     chown radio system /efs
     chmod 0771 /efs	
 	
-on charger
-# CPU Frequency Governor
-	write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor interactive
-
-# EHCI runtime enable for LPA
-	write /sys/devices/platform/s5p-ehci/power/control auto	
-	
 #on property:persist.sys.storage_preload=1
 #    mount ext4 /dev/block/mmcblk0p18 /preload nosuid nodev noatime wait ro
 #    setprop storage.preload.complete 1
@@ -569,6 +565,10 @@ on property:ro.debuggable=1
 		class main
 		user system
 		group system
+		
+	service battery_charger /charger
+		class charger
+		critical		
 
 # RILD
 	service ril-daemon /system/bin/rild
@@ -709,24 +709,3 @@ on property:dev.bootcomplete=1
 
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
-		
-service battery_charger /charger
-    class charger
-	critical
-	seclabel u:r:healthd:s0	
-	
-service playlpm /system/bin/playlpm
-	class charger
-    user root
-	seclabel u:r:healthd:s0
-
-service immvibed /system/bin/immvibed
-	class charger
-	oneshot
-	user root
-	seclabel u:r:healthd:s0
-
-service lpmkey /system/bin/lpmkey
-	class charger
-    user root
-	seclabel u:r:healthd:s0
