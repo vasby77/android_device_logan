@@ -194,7 +194,6 @@
     <integer name="config_backKillTimeout">1500</integer>
 
     <!-- Boolean to enable stk functionality on Samsung phones -->
-    <!-- <bool name="config_samsung_stk">true</bool> -->
     <bool name="config_samsung_stk">true</bool>
 
     <!-- Hardware 'face' keys present on the device, stored as a bit field.
@@ -205,7 +204,6 @@
              4 - Menu
              8 - Assistant (search)
             16 - App switch
-            32 - Camera
             64 - Volume rocker
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->

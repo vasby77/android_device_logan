@@ -74,6 +74,10 @@ TARGET_USES_ION := true
 HWUI_COMPILE_FOR_PERF := true
 COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC
 
+# Camera
+BOARD_USE_METADATABUFFERTYPE := true
+BOARD_USE_STOREMETADATA := true
+
 # Include an expanded selection of fonts
 EXTENDED_FONT_FOOTPRINT := true
 
@@ -89,8 +93,6 @@ BOARD_USE_BGRA_8888 := true
 # Audio
 BOARD_USES_LEGACY_ALSA_AUDIO := true
 
-TRACK_BUFFER_TIMING := true
-
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
 #ifeq ($(HOST_OS),linux)
@@ -104,11 +106,11 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Charger
-BOARD_LPM_BOOT_ARGUMENT_NAME := lpm_boot
-BOARD_LPM_BOOT_ARGUMENT_VALUE := 1
-
-# Sensor
-SENSORS_NEED_SETRATE_ON_ENABLE := true
+BOARD_BATTERY_DEVICE_NAME := battery
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
+BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii

@@ -12,5 +12,5 @@
 /dev/block/platform/sdhci.1/by-name/modem	   /modem 		     emmc 	 defaults 					                                 defaults
 
 # vold-managed volumes ("block device" is actually a sysfs devpath)
-/devices/platform/sdhci.0/mmc_host/mmc2       auto  			auto     defaults                                                    voldmanaged=sdcard1:auto,noemulatedsd
-/devices/platform/sdhci.0/mmc_host/mmc2       auto  			auto     defaults                                                    voldmanaged=sdcard2:auto,noemulatedsd
+/devices/platform/sdhci.0/mmc_host/mmc2*       auto  			auto     defaults                                                    voldmanaged=sdcard1:auto,noemulatedsd
+/devices/platform/sdhci.0/mmc_host/mmc2*       auto  			auto     defaults                                                    voldmanaged=sdcard2:auto,noemulatedsd
