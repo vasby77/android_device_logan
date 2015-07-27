@@ -428,6 +428,9 @@ on boot
 # serial_no permission change
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
+	
+# disable swap page clustering -- recommended in https://source.android.com/devices/low-ram.html
+    write /proc/sys/vm/page-cluster 0	
 		
 on charger
 # Set cpu governor to interactive while in charging mode
@@ -439,6 +442,7 @@ on charger
 			  
 on fs
     mount_all /fstab.hawaii_ss_logan
+	swapon_all fstab.hawaii_ss_logan
 	
     setprop ro.crypto.fuse_sdcard true
 
