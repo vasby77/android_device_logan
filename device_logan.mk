@@ -104,8 +104,7 @@ PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:system/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
 	frameworks/native/data/etc/android.software.sip.voip.xml:system/etc/permissions/android.software.sip.voip.xml \
 	frameworks/native/data/etc/android.hardware.usb.accessory.xml:system/etc/permissions/android.hardware.usb.accessory.xml \
-	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
-	packages/wallpapers/LivePicker/android.software.live_wallpaper.xml:system/etc/permissions/android.software.live_wallpaper.xml
+	frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
 
 # Support for Browser's saved page feature. This allows
 # for pages saved on previous versions of the OS to be
@@ -163,6 +162,17 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 ifeq ($(TARGET_BUILD_VARIANT),user)      
 else      
 endif
+
+# ART
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-filter=interpret-only \
+    dalvik.vm.image-dex2oat-filter=speed
+
+# ART
+PRODUCT_DEX_PREOPT_DEFAULT_FLAGS := \
+    --compiler-filter=interpret-only
+
+$(call add-product-dex-preopt-module-config,services,--compiler-filter=speed)
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_logan
