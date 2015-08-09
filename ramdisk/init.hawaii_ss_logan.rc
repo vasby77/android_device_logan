@@ -256,9 +256,9 @@ on boot
 
 # fake some battery state
     setprop status.battery.state Slow
-    setprop status.battery.level 5
-    setprop status.battery.level_raw  50
-    setprop status.battery.level_scale 9
+    setprop status.battery.level 10
+    setprop status.battery.level_raw  100
+    setprop status.battery.level_scale 10
 
 # Set permission for Widevine DRM temporarily
     chmod 0777 /dev/s5p-smem
