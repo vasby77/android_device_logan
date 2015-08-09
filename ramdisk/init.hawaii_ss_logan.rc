@@ -700,9 +700,9 @@ on property:dev.bootcomplete=1
 		class charger
 		critical
 		
-	service playlpm /system/bin/playlpm
-    	user root
-		critical
+	//service playlpm /system/bin/playlpm
+    //	user root
+	//	critical
 
 	service immvibed /system/bin/immvibed 
 		oneshot
@@ -712,7 +712,7 @@ on property:dev.bootcomplete=1
 		critical
 
 on charger
-	start playlpm
+	//start playlpm
 	start immvibed
 	start lpmkey		
 		
