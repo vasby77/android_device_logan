@@ -138,9 +138,6 @@ TARGET_USES_LOGD := false
 # jemalloc causes a lot of random crash on free()
 #MALLOC_IMPL := dlmalloc
 
-# SELinux
-ALLOW_DISABLE_SELINUX := true
-
 BOARD_SEPOLICY_DIRS += \
     device/samsung/logan/sepolicy
 

@@ -123,6 +123,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
 	cm.updater.uri=http://get.ace3.tk \
 	ro.telephony.call_ring.multiple=0 \
+	ro.boot.selinux=permissive \
 	ro.telephony.call_ring=0
     
 # enable Google-specific location features,

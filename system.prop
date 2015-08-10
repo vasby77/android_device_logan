@@ -39,6 +39,3 @@ ro.com.google.gmsversion=4.1_r4
 
 # Camera
 camera2.portability.force_api=1
-
-# SELinux
-ro.boot.selinux=permissive
