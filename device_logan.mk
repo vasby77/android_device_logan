@@ -163,17 +163,6 @@ ifeq ($(TARGET_BUILD_VARIANT),user)
 else      
 endif
 
-# ART
-PRODUCT_PROPERTY_OVERRIDES += \
-    dalvik.vm.dex2oat-filter=interpret-only \
-    dalvik.vm.image-dex2oat-filter=speed
-
-# ART
-PRODUCT_DEX_PREOPT_DEFAULT_FLAGS := \
-    --compiler-filter=interpret-only
-
-$(call add-product-dex-preopt-module-config,services,--compiler-filter=speed)
-
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_logan
 PRODUCT_DEVICE := logan
