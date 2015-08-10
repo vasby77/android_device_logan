@@ -104,7 +104,7 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 #BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 #CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
-BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
+#BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
