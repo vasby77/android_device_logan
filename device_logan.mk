@@ -40,8 +40,8 @@ PRODUCT_COPY_FILES += \
 #	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
 # Charger
-PRODUCT_PACKAGES += \
-    charger_res_images
+#PRODUCT_PACKAGES += \
+    #charger_res_images
 
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -73,8 +73,8 @@ PRODUCT_PACKAGES += \
 	Torch
 
 # KSM
-PRODUCT_PROPERTY_OVERRIDES += \
-	ro.ksm.default=1	
+#PRODUCT_PROPERTY_OVERRIDES += \
+	#ro.ksm.default=1	
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
