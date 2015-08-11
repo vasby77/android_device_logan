@@ -12,7 +12,7 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a9
 TARGET_CPU_SMP := true
-#ARCH_ARM_HAVE_TLS_REGISTER := true
+ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_BOOTLOADER_BOARD_NAME := hawaii
 
 # Assert
@@ -69,10 +69,10 @@ BOARD_EGL_CFG := device/samsung/logan/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
-TARGET_USES_ION := true
-HWUI_COMPILE_FOR_PERF := true
-COMMON_GLOBAL_CFLAGS += -DHAWAII_HWC
-#TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
+#TARGET_USES_ION := true
+#HWUI_COMPILE_FOR_PERF := true
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DREFBASE_JB_MR1_COMPAT_SYMBOLS
+TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # Camera
 #BOARD_USE_METADATABUFFERTYPE := true
@@ -107,7 +107,7 @@ BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charg
 #BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
 # healthd
-#BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
+BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
@@ -136,7 +136,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/samsung/logan/include
 TARGET_USES_LOGD := false
 
 # jemalloc causes a lot of random crash on free()
-MALLOC_IMPL := dlmalloc
+#MALLOC_IMPL := dlmalloc
 
 BOARD_SEPOLICY_DIRS += \
     device/samsung/logan/sepolicy
