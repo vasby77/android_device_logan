@@ -31,7 +31,7 @@
 
 /dev/ttyS0                                          u:object_r:hci_attach_dev:s0
 /dev/ttyS1											u:object_r:gps_device:s0
-/dev/ttyS2                                          u:object_r:gps_device:s0
+#/dev/ttyS2                                          u:object_r:gps_device:s0
 /dev/bcm_gps                                        u:object_r:gps_device:s0
 
 /dev/bcm_log                                        u:object_r:radio_device:s0
