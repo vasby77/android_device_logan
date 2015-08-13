@@ -10,7 +10,7 @@ rild.libpath=/system/lib/libbrcm_ril.so
 #rild.libargs=-d /dev/ttyS0
 ro.sf.lcd_density=240
 ro.lcd_brightness=160
-ro.lcd_min_brightness=20
+ro.lcd_min_brightness=18
 
 # MultiTouch support
 ro.product.multi_touch_enabled=true
@@ -23,9 +23,6 @@ debug.hwui.render_dirty_regions=false
 brcm.graphics.async_errors=false
 brcm.hwc.no-hdmi-trans=1
 
-# Multimedia property for Smart View
-media.enable-commonsource=true
-
 #adative video encoding
 video.enc.h264.adaptive_quality=1
 video.enc.h264.timing_window_sz=4
@@ -36,6 +33,3 @@ video.enc.h264.timing_thr2=145
 ro.ril.hsxpa=1
 ro.ril.gprsclass=10
 ro.com.google.gmsversion=4.1_r4
-
-# Camera
-camera2.portability.force_api=1

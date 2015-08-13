@@ -3,8 +3,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product-if-exists, vendor/samsung/logan/logan-common-vendor.mk)
 
 # Use high-density artwork where available
-PRODUCT_LOCALES += hdpi
-PRODUCT_AAPT_CONFIG := normal hdpi
+#PRODUCT_LOCALES += hdpi
+PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 DEVICE_PACKAGE_OVERLAYS += device/samsung/logan/overlay
@@ -41,7 +41,7 @@ PRODUCT_COPY_FILES += \
 
 # Charger
 #PRODUCT_PACKAGES += \
-    #charger_res_images
+#	charger_res_images
 
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -64,17 +64,14 @@ PRODUCT_PACKAGES += \
 	audio.usb.default \
 	audio.r_submix.default \
 	audio.primary.default \
-	libaudioutils \
-    libtinyalsa
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
-	SamsungServiceMode \
-	Torch
+	SamsungServiceMode
 
 # KSM
 #PRODUCT_PROPERTY_OVERRIDES += \
-	#ro.ksm.default=1	
+	ro.ksm.default=1	
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
@@ -108,8 +105,8 @@ PRODUCT_COPY_FILES += \
 # Support for Browser's saved page feature. This allows
 # for pages saved on previous versions of the OS to be
 # viewed on the current OS.
-PRODUCT_PACKAGES += \
-    libskia_legacy
+#PRODUCT_PACKAGES += \
+#    libskia_legacy
 
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
@@ -123,7 +120,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
 	cm.updater.uri=http://get.ace3.tk \
 	ro.telephony.call_ring.multiple=0 \
-	ro.boot.selinux=permissive \
 	ro.telephony.call_ring=0
     
 # enable Google-specific location features,
