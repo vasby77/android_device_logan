@@ -430,7 +430,7 @@ on boot
     chown system system /efs/FactoryApp/serial_no
 	
 # disable swap page clustering -- recommended in https://source.android.com/devices/low-ram.html
-    write /proc/sys/vm/page-cluster 0	
+    #write /proc/sys/vm/page-cluster 0	
 		
 on charger
 	mount ext4 /dev/block/mmcblk0p17 /system ro wait noatime
@@ -446,7 +446,7 @@ on charger
 			  
 on fs
     mount_all /fstab.hawaii_ss_logan
-	swapon_all fstab.hawaii_ss_logan
+	#swapon_all fstab.hawaii_ss_logan
 	
     setprop ro.crypto.fuse_sdcard true
 
@@ -697,7 +697,7 @@ on property:dev.bootcomplete=1
 		oneshot
 		
 	service battery_charger /charger
-		class charger
+		user root
 		critical
 		
 	service playlpm /system/bin/playlpm
@@ -712,6 +712,7 @@ on property:dev.bootcomplete=1
 		critical
 
 on charger
+	start battery_charger
 	start playlpm
 	start immvibed
 	start lpmkey		
