@@ -14,6 +14,8 @@ TARGET_CPU_VARIANT := cortex-a9
 TARGET_CPU_SMP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_BOOTLOADER_BOARD_NAME := hawaii
+TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
+TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
 
 # Assert
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
@@ -69,9 +71,9 @@ BOARD_EGL_CFG := device/samsung/logan/configs/egl.cfg
 USE_OPENGL_RENDERER := true
 BOARD_USE_MHEAP_SCREENSHOT := true
 BOARD_EGL_WORKAROUND_BUG_10194508 := true
-#TARGET_USES_ION := true
-#HWUI_COMPILE_FOR_PERF := true
-COMMON_GLOBAL_CFLAGS += -DHAWAII_HWC
+TARGET_USES_ION := true
+HWUI_COMPILE_FOR_PERF := true
+COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC
 #TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 
 # Camera
@@ -100,14 +102,14 @@ TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 
 # Charger
-#BOARD_BATTERY_DEVICE_NAME := battery
+BOARD_BATTERY_DEVICE_NAME := battery
 BOARD_CHARGER_ENABLE_SUSPEND := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
-#CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
-#BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
+CHARGING_ENABLED_PATH := "/sys/class/power_supply/battery/batt_lp_charging"
+BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 
 # healthd
-#BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
+BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
