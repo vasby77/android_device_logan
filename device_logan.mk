@@ -40,8 +40,8 @@ PRODUCT_COPY_FILES += \
 #	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
 
 # Charger
-#PRODUCT_PACKAGES += \
-#	charger_res_images
+PRODUCT_PACKAGES += \
+	charger_res_images
 
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -115,26 +115,30 @@ PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
     mobiledata.interfaces=rmnet0 \
     ro.telephony.ril_class=SamsungBCMRIL \
-    ro.zygote.disable_gl_preload=true \
+    #ro.zygote.disable_gl_preload=true \
     persist.radio.multisim.config=none \
-	ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
+	#ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
 	cm.updater.uri=http://get.ace3.tk \
 	ro.telephony.call_ring.multiple=0 \
 	ro.telephony.call_ring=0
+	
+# Force use old camera api
+PRODUCT_PROPERTY_OVERRIDES += \
+    camera2.portability.force_api=1	
     
 # enable Google-specific location features,
 # like NetworkLocationProvider and LocationCollector
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.com.google.locationfeatures=1 \
-    ro.com.google.networklocation=1
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.com.google.locationfeatures=1 \
+#    ro.com.google.networklocation=1
 
 # Extended JNI checks
 # The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
 # before they have a chance to cause problems.
 # Default=true for development builds, set by android buildsystem.
-PRODUCT_PROPERTY_OVERRIDES += \
-    ro.kernel.android.checkjni=0 \
-    dalvik.vm.checkjni=false
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.kernel.android.checkjni=0 \
+#    dalvik.vm.checkjni=false
 
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -143,14 +147,14 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # Override phone-hdpi-512-dalvik-heap to match value on stock
 # - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)
 # (property override must come before included property)
-PRODUCT_PROPERTY_OVERRIDES += \
-	dalvik.vm.heapgrowthlimit=56m	
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	dalvik.vm.heapgrowthlimit=56m	
 
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
 # we have enough storage space to hold precise GC data
-PRODUCT_TAGS += dalvik.gc.type-precise
+#PRODUCT_TAGS += dalvik.gc.type-precise
 
 $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
