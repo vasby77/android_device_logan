@@ -87,7 +87,7 @@ EXTENDED_FONT_FOOTPRINT := true
 BOARD_USE_BGRA_8888 := true
 
 # Audio
-BOARD_USES_LEGACY_ALSA_AUDIO := true
+BOARD_USES_ALSA_AUDIO := true
 
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
