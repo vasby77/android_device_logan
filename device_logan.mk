@@ -16,8 +16,6 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/ramdisk/init.hawaii_ss_logan.rc:root/init.hawaii_ss_logan.rc \
 	device/samsung/logan/ramdisk/init.bcm2166x.usb.rc:root/init.bcm2166x.usb.rc \
 	device/samsung/logan/ramdisk/init.log.rc:root/init.log.rc \
-	device/samsung/logan/ramdisk/lpm.rc:root/lpm.rc \
-	device/samsung/logan/ramdisk/default.prop:root/default.prop \
 	device/samsung/logan/ramdisk/charger:root/charger \
 	device/samsung/logan/ramdisk/ueventd.hawaii_ss_logan.rc:root/ueventd.hawaii_ss_logan.rc
 	
