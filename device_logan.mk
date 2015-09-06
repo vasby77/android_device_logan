@@ -111,13 +111,13 @@ PRODUCT_COPY_FILES += \
 # These are the hardware-specific settings that are stored in system properties.
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
+# ro.zygote.disable_gl_preload=true \
+# ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
 PRODUCT_PROPERTY_OVERRIDES += \
     wifi.interface=wlan0 \
     mobiledata.interfaces=rmnet0 \
     ro.telephony.ril_class=SamsungBCMRIL \
-    #ro.zygote.disable_gl_preload=true \
     persist.radio.multisim.config=none \
-	#ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
 	cm.updater.uri=http://get.ace3.tk \
 	ro.telephony.call_ring.multiple=0 \
 	ro.telephony.call_ring=0
