@@ -127,6 +127,7 @@ BOARD_RECOVERY_HANDLES_MOUNT := true
 BOARD_USES_MMCUTILS := false
 BOARD_RECOVERY_ALWAYS_WIPES := false
 BOARD_SUPPRESS_EMMC_WIPE := true
+TARGET_RECOVERY_DENSITY := hdpi
 
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
