@@ -253,9 +253,6 @@ on boot
 # BCMPMU drivers
     chown -R system system /sys/devices/platform/bcmpmu*/*
 # */
-# change owner of mtest system to allow atx/atxd to write this file:
-    chown system system /sys/kernel/sysrpc/mtest
-
 # fake some battery state
     setprop status.battery.state Slow
     setprop status.battery.level 10
@@ -270,7 +267,7 @@ on boot
     setprop ro.telephony.call_ring.multiple 0
 	
 # Enable dithering algorithm
-    setprop fb.force.dithering 1	
+    setprop fb.force.dithering 1
 
 # permissions for gps.
 	mkdir /data/gps 0770 gps system
@@ -295,7 +292,7 @@ on boot
 
     chmod 0660 /dev/bcm_gps
     chown radio radio /dev/bcm_gps
-
+   
 # SEC_PRODUCT_FEATURE_COMMON_USE_MULTISIM
     setprop ro.multisim.simslotcount 1
 	
@@ -529,7 +526,7 @@ on post-fs
 	restorecon_recursive /efs
     chown radio system /efs
     chmod 0771 /efs
-			
+		
 # create virtual SD card at /mnt/sdcard, based on the /data/media directory
 # daemon will drop to user/group system/media_rw after initializing
 # underlying files in /data/media will be created with user and group media_rw (1023)
@@ -671,6 +668,12 @@ on property:init.svc.macloader=stopped
 		user root
 		#group radio system log
 		group radio system log root
+
+# Run usb_portd to automatically launch atx when USB configuration changes.
+service usb_portd /system/bin/usb_portd
+    class main
+    user system
+    group input vpn net_admin net_raw radio system sdcard_rw log mount
 
 #Indicate boot complete to PM to complete PM initialization
 on property:dev.bootcomplete=1

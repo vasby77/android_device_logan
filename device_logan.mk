@@ -49,9 +49,9 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-    	make_ext4fs \
-    	e2fsck \
-	setup_fs
+	make_ext4fs \
+    e2fsck \
+    setup_fs
 		
 # Usb accessory
 PRODUCT_PACKAGES += \
@@ -62,7 +62,7 @@ PRODUCT_PACKAGES += \
 	audio.a2dp.default \
 	audio.usb.default \
 	audio.r_submix.default \
-	audio.primary.default \
+	audio.primary.default
 
 # Device-specific packages
 PRODUCT_PACKAGES += \
@@ -105,10 +105,10 @@ PRODUCT_COPY_FILES += \
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-    	wifi.interface=wlan0 \
+    wifi.interface=wlan0 \
 	mobiledata.interfaces=rmnet0 \
 	ro.telephony.ril_class=SamsungBCMRIL \
-    	persist.radio.multisim.config=none \
+    persist.radio.multisim.config=none \
 	cm.updater.uri=http://get.ace3.tk \
 	ro.telephony.call_ring.multiple=0 \
 	camera2.portability.force_api=1 \
