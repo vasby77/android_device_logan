@@ -18,12 +18,11 @@ TARGET_BOOTLOADER_BOARD_NAME := hawaii
 # Assert
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 
-# Kernel (console=ttyS0,115200n8 mem=456M gpt v3d_mem=67108864 pmem=24M@0x9E800000)
-BOARD_KERNEL_CMDLINE :=
+# Kernel
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung
+TARGET_KERNEL_SOURCE := kernel/samsung/loganxx
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
 # PARTITION SIZE
@@ -82,13 +81,6 @@ BOARD_USE_BGRA_8888 := true
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 
-# Optimisations
-#TARGET_USE_SCORPIAN_BIONIC_OPTIMIZATION := true
-#TARGET_CORTEX_CACHE_LINE_32 := true
-#ARCH_ARM_HIGH_OPTIMIZATION := true
-#ARCH_ARM_HIGH_OPTIMIZATION_COMPAT := true
-#ARCH_ARM_HAVE_32_BYTE_CACHE_LINES := true
-
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
 ifeq ($(HOST_OS),linux)
@@ -96,14 +88,6 @@ ifeq ($(HOST_OS),linux)
     WITH_DEXPREOPT := true
   endif
 endif
-
-# Add h/w acceleration in browser
-#ENABLE_WEBGL := true
-#WITH_JIT := true
-#ENABLE_JSC_JIT := true
-#JS_ENGINE := v8
-#HTTP := chrome
-#TARGET_FORCE_CPU_UPLOAD := true
 
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
@@ -114,10 +98,6 @@ TARGET_BOOTANIMATION_TEXTURE_CACHE := true
 #BOARD_ALLOW_SUSPEND_IN_CHARGER := true
 BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
 #BOARD_BATTERY_DEVICE_NAME := "battery"
-
-SENSORS_NEED_SETRATE_ON_ENABLE := true
-BOARD_USE_LEGACY_SENSORS_FUSION := false
-BOARD_SDEXT_DEVICE := /dev/block/mmcblk1p1
 
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
@@ -138,9 +118,6 @@ BOARD_RECOVERY_HANDLES_MOUNT := true
 BOARD_USES_MMCUTILS := false
 BOARD_RECOVERY_ALWAYS_WIPES := false
 BOARD_SUPPRESS_EMMC_WIPE := true
-
-BOARD_HAVE_FM_RADIO := true
-BOARD_FM_DEVICE := bcm4329
 
 # CMHW
 BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
