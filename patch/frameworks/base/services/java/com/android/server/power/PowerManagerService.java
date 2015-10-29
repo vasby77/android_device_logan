@@ -2671,8 +2671,11 @@ public final class PowerManagerService extends IPowerManager.Stub
         if (reason == null) {
             reason = "";
         }
-        long duration;
-        if (reason.equals(PowerManager.REBOOT_RECOVERY)) {
+		Log.e(TAG, "Reboot to recovery");
+		SystemProperties.set("sys.powerctl", "reboot," + reason);
+		Log.e(TAG, "Reboot to recovery sys.powerctl ok");
+       // long duration;
+       // if (reason.equals(PowerManager.REBOOT_RECOVERY)) {
             // If we are rebooting to go into recovery, instead of
             // setting sys.powerctl directly we'll start the
             // pre-recovery service which will do some preparation for
@@ -2681,15 +2684,18 @@ public final class PowerManagerService extends IPowerManager.Stub
             // This preparation can take more than 20 seconds if
             // there's a very large update package, so lengthen the
             // timeout.
-            SystemProperties.set("ctl.start", "pre-recovery");
-            duration = 120 * 1000L;
-        } else {
-            SystemProperties.set("sys.powerctl", "reboot," + reason);
-            duration = 20 * 1000L;
-        }
+       //     SystemProperties.set("ctl.start", "pre-recovery");
+      //      duration = 120 * 1000L;
+       // } else {
+        //    SystemProperties.set("sys.powerctl", "reboot," + reason);
+       //     duration = 20 * 1000L;
+       // }
         try {
-            Thread.sleep(duration);
+			Log.e(TAG, "Reboot to recovery sleep(20000)");
+			Thread.sleep(20000);
+            //Thread.sleep(duration);
         } catch (InterruptedException e) {
+			Log.e(TAG, "Reboot to recovery interrupt");
             Thread.currentThread().interrupt();
         }
     }
