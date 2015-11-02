@@ -106,11 +106,11 @@ PRODUCT_COPY_FILES += \
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-    	wifi.interface=wlan0 \
+    wifi.interface=wlan0 \
 	mobiledata.interfaces=rmnet0 \
 	ro.telephony.ril_class=SamsungBCMRIL \
-    	persist.radio.multisim.config=none \
-	cm.updater.uri=http://get.ace3.tk \
+    persist.radio.multisim.config=none \
+	cm.updater.uri=http://ota.androiddev.pp.ua \
 	ro.telephony.call_ring.multiple=0 \
 	camera2.portability.force_api=1 \
 	ro.telephony.call_ring=0
@@ -140,7 +140,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 #	dalvik.vm.heapgrowthlimit=56m	
 
 # Dalvik heap config
-include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
+include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
 
 # we have enough storage space to hold precise GC data
 #PRODUCT_TAGS += dalvik.gc.type-precise
