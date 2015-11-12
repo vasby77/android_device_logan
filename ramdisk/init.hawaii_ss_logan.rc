@@ -562,11 +562,11 @@ on post-fs
 		group system
 		
 # Run usb_portd to automatically launch atx when USB configuration changes.
-service usb_portd /system/bin/usb_portd
-    class main
-#    oneshot
-    user system
-    group input vpn net_admin net_raw radio system sdcard_rw log mount		
+	service usb_portd /system/bin/usb_portd
+		class main
+#    	oneshot
+		user system
+		group input vpn net_admin net_raw radio system sdcard_rw log mount		
 		
 # RILD
 	service ril-daemon /system/bin/rild
@@ -727,4 +727,3 @@ on property:dev.bootcomplete=1
 		
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
-	
