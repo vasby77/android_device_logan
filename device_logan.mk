@@ -24,7 +24,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/configs/audio_policy.conf:system/etc/audio_policy.conf \
 	frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
 	frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
-	frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml \
+	frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
 	device/samsung/logan/configs/media_codecs.xml:system/etc/media_codecs.xml 
 
 # Prebuilt kl keymaps
@@ -52,11 +52,11 @@ PRODUCT_PACKAGES += \
 	make_ext4fs \
     e2fsck \
     setup_fs
-		
-# Usb accessory
+	
+# Open-source lights HAL
 PRODUCT_PACKAGES += \
-	com.android.future.usb.accessory
-
+	lights.hawaii	
+		
 # Misc other modules
 PRODUCT_PACKAGES += \
 	audio.a2dp.default \
@@ -77,7 +77,11 @@ PRODUCT_PACKAGES += \
 	dhcpcd.conf \
 	hostapd \
 	wpa_supplicant \
-	wpa_supplicant.conf	
+	wpa_supplicant.conf
+
+# Samsung Doze
+PRODUCT_PACKAGES += \
+	SamsungDoze	
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -109,24 +113,18 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	mobiledata.interfaces=rmnet0 \
 	ro.telephony.ril_class=SamsungBCMRIL \
     persist.radio.multisim.config=none \
-	cm.updater.uri=http://get.ace3.tk \
+	cm.updater.uri=http://ota.androiddev.pp.ua \
 	ro.telephony.call_ring.multiple=0 \
 	camera2.portability.force_api=1 \
 	ro.telephony.call_ring=0
 	
-# enable Google-specific location features,
-# like NetworkLocationProvider and LocationCollector
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    ro.com.google.locationfeatures=1 \
-#    ro.com.google.networklocation=1
-
 # Extended JNI checks
 # The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
 # before they have a chance to cause problems.
 # Default=true for development builds, set by android buildsystem.
-#PRODUCT_PROPERTY_OVERRIDES += \
-#    ro.kernel.android.checkjni=0 \
-#    dalvik.vm.checkjni=false
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.checkjni=0 \
+    dalvik.vm.checkjni=false
 
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
@@ -135,17 +133,11 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # Override phone-hdpi-512-dalvik-heap to match value on stock
 # - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)
 # (property override must come before included property)
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	dalvik.vm.heapgrowthlimit=56m	
+PRODUCT_PROPERTY_OVERRIDES += \
+	dalvik.vm.heapgrowthlimit=56m	
 
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
-
-# we have enough storage space to hold precise GC data
-#PRODUCT_TAGS += dalvik.gc.type-precise
-
-$(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 ifeq ($(TARGET_BUILD_VARIANT),user)      
 else      

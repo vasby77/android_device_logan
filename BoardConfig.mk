@@ -110,6 +110,11 @@ BACKLIGHT_PATH := "/sys/class/backlight/panel/brightness"
 # healthd
 BOARD_HAL_STATIC_LIBRARIES := libhealthd-logan.hawaii
 
+# Use the CM PowerHAL
+TARGET_USES_CM_POWERHAL := true
+CM_POWERHAL_EXTENSION := hawaii
+TARGET_POWERHAL_VARIANT = cm
+
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
 
