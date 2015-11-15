@@ -139,6 +139,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
+$(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+
 ifeq ($(TARGET_BUILD_VARIANT),user)      
 else      
 endif
