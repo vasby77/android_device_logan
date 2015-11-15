@@ -88,8 +88,6 @@ BOARD_USE_BGRA_8888 := true
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 
-#ANDROID_COMMON_BUILD_MK = true
-
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
 ifeq ($(HOST_OS),linux)
