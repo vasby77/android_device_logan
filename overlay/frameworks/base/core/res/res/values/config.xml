@@ -53,14 +53,10 @@
 
          Must be overridden in platform specific overlays -->
      <integer-array name="config_autoBrightnessLevels">
-        <item>9</item>
-        <item>30</item>
-        <item>100</item>
-        <item>325</item>
-        <item>1250</item>
-        <item>3500</item>
-        <item>10000</item>
-        <item>20000</item>
+        <item>15</item>
+        <item>150</item>
+        <item>1500</item>
+        <item>15000</item>
      </integer-array>
 
     <!-- Array of output values for LCD backlight corresponding to the LUX values
@@ -68,15 +64,11 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessLcdBacklightValues">
-        <item>18</item>   <!-- 0-9 -->
-        <item>30</item>   <!-- 10-30 -->
-        <item>59</item>   <!-- 31-100 -->
-        <item>74</item>   <!-- 101-325 -->
-        <item>92</item>   <!-- 326-1250 -->
-        <item>118</item>  <!-- 1251-3500 -->
-        <item>155</item>  <!-- 3501-10000 -->
-        <item>222</item>  <!-- 10001-20000 -->
-        <item>255</item>  <!-- 20001+ -->
+        <item>20</item>
+        <item>80</item>
+        <item>130</item>
+        <item>190</item>
+        <item>255</item>
     </integer-array>
 
     <!-- Array of output values for button backlight corresponding to the LUX values
@@ -84,15 +76,11 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
-        <item>255</item>   <!-- 0-9 -->
-        <item>255</item>   <!-- 10-30 -->
-        <item>255</item>   <!-- 31-100 -->
-        <item>255</item>   <!-- 101-325 -->
-        <item>255</item>   <!-- 326-1250 -->
-        <item>255</item>  <!-- 1251-3500 -->
-        <item>255</item>  <!-- 3501-10000 -->
-        <item>255</item>  <!-- 10001-20000 -->
-        <item>255</item>  <!-- 20001+ -->
+        <item>255</item>
+        <item>255</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </integer-array>
 
     <!-- Array of output values for keyboard backlight corresponding to the LUX values
@@ -100,15 +88,11 @@
          than the size of the config_autoBrightnessLevels array.
     -->
     <integer-array name="config_autoBrightnessKeyboardBacklightValues">
-        <item>255</item>   <!-- 0-9 -->
-        <item>255</item>   <!-- 10-30 -->
-        <item>255</item>   <!-- 31-100 -->
-        <item>255</item>   <!-- 101-325 -->
-        <item>255</item>   <!-- 326-1250 -->
-        <item>255</item>  <!-- 1251-3500 -->
-        <item>255</item>  <!-- 3501-10000 -->
-        <item>255</item>  <!-- 10001-20000 -->
-        <item>255</item>  <!-- 20001+ -->
+        <item>255</item>
+        <item>255</item>
+        <item>0</item>
+        <item>0</item>
+        <item>0</item>
     </integer-array>
 
     <integer name="config_deskDockKeepsScreenOn">0</integer>
@@ -262,8 +246,8 @@
 
     <!-- Support Miracast -->
     <bool name="config_enableWifiDisplay">true</bool>
-	
-	<integer name="config_screenBrightnessDoze">10</integer>
+	    
+    <integer name="config_screenBrightnessDoze">10</integer>
 
 	<string name="config_dozeComponent">com.android.systemui/com.android.systemui.doze.DozeService</string>
 
