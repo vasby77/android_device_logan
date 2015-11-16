@@ -42,7 +42,7 @@ char const* const PANEL_FILE
         = "/sys/class/backlight/panel/brightness";
 
 char const* const BUTTON_FILE
-        = "/sys/class/leds/button-backlight/brightness";
+        = "/sys/class/backlight/touchkey-led/brightness";
 
 /**
  * device methods
