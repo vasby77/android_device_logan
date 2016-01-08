@@ -35,20 +35,15 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/samsung/logan/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
 
-# Copy Apps
-# 	device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
-#PRODUCT_COPY_FILES += \
-#	device/samsung/logan/apk/Effem.apk:system/app/Effem.apk
-
 # Insecure ADBD
 # (ro.adb.secure=3)
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
-	persist.service.adb.enable=0
+	persist.service.adb.enable=1
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
-    ro.ksm.default=1	
+    ro.ksm.default=0	
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -76,11 +71,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
 	SamsungServiceMode \
 	Torch
-
-# Charger
-#PRODUCT_PACKAGES += \
-#	charger \
-#	charger_res_images
 
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
@@ -119,8 +109,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.telephony.ril_class=SamsungBCMRIL \
     ro.zygote.disable_gl_preload=true \
     persist.radio.multisim.config=none \
-	ro.cm.hardware.cabc=/sys/class/mdnie/mdnie/cabc \
-	cm.updater.uri=http://ota.androiddev.pp.ua \
+	cm.updater.uri=http://updates.cm-ota.pp.ua \
 	ro.telephony.call_ring.multiple=0 \
 	ro.telephony.call_ring=0
     
@@ -142,14 +131,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
 	
-# Override phone-hdpi-512-dalvik-heap to match value on stock
-# - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)
-# (property override must come before included property)
-#PRODUCT_PROPERTY_OVERRIDES += \
-#	dalvik.vm.heapgrowthlimit=56m	
-
 # Dalvik heap config
 include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
+include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
 
 # we have enough storage space to hold precise GC data
 PRODUCT_TAGS += dalvik.gc.type-precise
