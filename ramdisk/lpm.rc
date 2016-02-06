@@ -1,7 +1,7 @@
 on early-init
     start ueventd
-	
-    export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
+
+	export PATH /sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
     export LD_LIBRARY_PATH /vendor/lib:/system/lib
     export ANDROID_ROOT /system
     export ANDROID_DATA /data
@@ -18,8 +18,8 @@ on early-init
     mkdir /tmp
     mkdir /dbdata
     mkdir /mnt 0775 root root
-    #mount /tmp /tmp tmpfs  
-
+    #mount /tmp /tmp tmpfs 
+	
     mount ext4 /dev/block/mmcblk0p17 /system ro wait noatime
     exec sfsck /dev/block/mmcblk0p19 ext4
 	mount ext4 /dev/block/mmcblk0p19 /data wait nosuid nodev noatime discard,noauto_da_alloc,journal_async_commit
@@ -50,6 +50,10 @@ service debuggerd /system/bin/debuggerd
 	service ueventd /sbin/ueventd
     	critical
 
+service battery_charger /charger
+		class charger
+		seclabel u:r:healthd:s0
+		
 #service console /bin/sh
 service console /system/bin/sh
 	console
@@ -62,10 +66,6 @@ service immvibed /system/bin/immvibed
 
 service lpmkey /system/bin/lpmkey
     	user root
-
-service battery_charger /charger
-		class charger
-		seclabel u:r:healthd:s0		
 
 # adbd is controlled by the persist.service.adb.enable system property
 service adbd /sbin/adbd

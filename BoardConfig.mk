@@ -83,6 +83,14 @@ BOARD_USE_BGRA_8888 := true
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 
+# Enable dex-preoptimization to speed up the first boot sequence
+# of an SDK AVD. Note that this operation only works on Linux for now
+ifeq ($(HOST_OS),linux)
+  ifeq ($(WITH_DEXPREOPT),)
+    WITH_DEXPREOPT := true
+  endif
+endif
+
 # Bootanimation
 TARGET_BOOTANIMATION_PRELOAD := true
 TARGET_BOOTANIMATION_TEXTURE_CACHE := true
@@ -104,6 +112,7 @@ TARGET_POWERHAL_VARIANT = cm
 
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
+COMMON_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 
 # Recovery
 #TARGET_RECOVERY_INITRC := 
@@ -126,31 +135,12 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
 # GPS
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/logan/include
 
-# Compat
-TARGET_USES_LOGD := false
+# MTP
+BOARD_MTP_DEVICE := /dev/mtp_usb
 
 # jemalloc causes a lot of random crash on free()
 MALLOC_IMPL := dlmalloc
 
+# SELinux
 BOARD_SEPOLICY_DIRS += \
     device/samsung/logan/sepolicy
-
-BOARD_SEPOLICY_UNION += \
-    file_contexts \
-    property_contexts \
-    service_contexts \
-    bkmgrd.te \
-    device.te \
-    surfaceflinger.te \
-    bluetooth.te \
-    geomagneticd.te \
-    gpsd.te \
-    init.te \
-    immvibed.te \
-    kernel.te \
-    macloader.te \
-    rild.te \
-    shell.te \
-    system_server.te \
-    tvserver.te \
-    vclmk.te

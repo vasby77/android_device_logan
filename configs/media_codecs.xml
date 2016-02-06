@@ -82,10 +82,6 @@ Only the three quirks included above are recognized at this point:
 		<MediaCodec name="OMX.brcm.video.h264.hw.decoder" type="video/avc">
 			<Quirk name="requires-allocate-on-input-ports" />
 		</MediaCodec>
-		<MediaCodec name="OMX.ffmpeg.ac3.decoder" type="audio/ac3" >
-            <Limit name="channel-count" max="8" />
-            <Limit name="sample-rate" ranges="8000-192000" />
-		</MediaCodec>
     </Decoders>
 	
     <Encoders>

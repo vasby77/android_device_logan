@@ -41,17 +41,23 @@ PRODUCT_PACKAGES += \
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
 	ro.adb.secure=0 \
-	persist.service.adb.enable=0
-
+	ro.secure=0 \
+	persist.service.adb.enable=1
+	
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-	make_ext4fs \
+    make_ext4fs \
     e2fsck \
     setup_fs
-	
+    
+# IPv6 tethering
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes
+   
 # Open-source lights HAL
 PRODUCT_PACKAGES += \
-	lights.hawaii	
+	lights.hawaii
 		
 # Misc other modules
 PRODUCT_PACKAGES += \
@@ -60,13 +66,17 @@ PRODUCT_PACKAGES += \
 	audio.r_submix.default \
 	audio.primary.default
 
-# Device-specific packages
-PRODUCT_PACKAGES += \
-	SamsungServiceMode
-
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
-	ro.ksm.default=1	
+	ro.ksm.default=1
+	
+# Use 3 threads for Dex2Oat.
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sys.fw.dex2oat_thread_count=3
+
+# ART
+PRODUCT_PROPERTY_OVERRIDES += \
+    dalvik.vm.dex2oat-flags=--no-watch-dog	
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
@@ -76,9 +86,14 @@ PRODUCT_PACKAGES += \
 	wpa_supplicant.conf
 
 # Samsung Doze
+#PRODUCT_PACKAGES += \
+#	SamsungDoze
+	
+# GPS/RIL
 PRODUCT_PACKAGES += \
-	SamsungDoze	
-
+	libstlport \
+	libglgps-compat
+	
 # These are the hardware-specific features
 PRODUCT_COPY_FILES += \
 	frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
@@ -105,7 +120,7 @@ PRODUCT_COPY_FILES += \
 # Note that the only such settings should be the ones that are too low-level to
 # be reachable from resources or other mechanisms.
 PRODUCT_PROPERTY_OVERRIDES += \
-    wifi.interface=wlan0 \
+	wifi.interface=wlan0 \
 	mobiledata.interfaces=rmnet0 \
 	ro.telephony.ril_class=SamsungBCMRIL \
     persist.radio.multisim.config=none \
@@ -113,11 +128,35 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.telephony.call_ring.multiple=0 \
 	camera2.portability.force_api=1 \
 	ro.telephony.call_ring=0
-		
+	
+# Support for Browser's saved page feature. This allows
+# for pages saved on previous versions of the OS to be
+# viewed on the current OS.
+PRODUCT_PACKAGES += \
+    libskia_legacy	
+	
+# Extended JNI checks
+# The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
+# before they have a chance to cause problems.
+# Default=true for development builds, set by android buildsystem.
+#PRODUCT_PROPERTY_OVERRIDES += \
+#    ro.kernel.android.checkjni=0 \
+#    dalvik.vm.checkjni=false
+
+  # Disable sending usage data
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.nocheckin=1 
+
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp
 	
+# Override phone-hdpi-512-dalvik-heap to match value on stock
+# - helps pass CTS com.squareup.okhttp.internal.spdy.Spdy3Test#tooLargeDataFrame)
+# (property override must come before included property)
+#PRODUCT_PROPERTY_OVERRIDES += \
+#	dalvik.vm.heapgrowthlimit=56m	
+
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk

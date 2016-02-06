@@ -5,38 +5,16 @@ on early-init
     mkdir /efs 0771 radio system
 
 on init
-# See storage config details at http://source.android.com/tech/storage/
-	mkdir /mnt/shell/emulated 0700 shell shell
-    mkdir /storage/emulated 0555 root root
-	export EXTERNAL_STORAGE /storage/emulated/legacy
-	export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
-    export EMULATED_STORAGE_TARGET /storage/emulated
-	# Support legacy paths
-    symlink /storage/emulated/legacy /sdcard
-    symlink /storage/emulated/legacy /mnt/sdcard
-	symlink /storage/emulated/legacy /storage/sdcard0
-	symlink /mnt/shell/emulated/0 /storage/emulated/legacy
+    mkdir /tmp
+    mount tmpfs tmpfs /tmp
+    chmod 1775 /tmp
 
-	mkdir /storage/sdcard1 0775 system system
-	export SECONDARY_STORAGE /storage/sdcard1
-	mkdir /mnt/media_rw/sdcard1 0700 media_rw media_rw
-	mkdir /storage/sdcard1 0700 root root
-	
-	#mkdir /storage/usbdisk 0775 system system
-	#export SECONDARY_STORAGE /storage/usbdisk0
-	#mkdir /mnt/media_rw/usbdisk0 0700 media_rw media_rw
-	#mkdir /storage/usbdisk0 0700 root root
-	
-	# for backwards compatibility
-    #symlink /storage/sdcard1 /external_sd
-    #symlink /storage/sdcard1 /mnt/external_sd
-    #symlink /storage/usbdisk /usbdisk
-    #symlink /storage/usbdisk /mnt/usbdisk
+    symlink /sdcard /mnt/sdcard
+    symlink /sdcard /storage/sdcard0
 
-# To store widevine keybox
-    symlink /data/app /factory
-	symlink /efs /factory
-	symlink /dev/block/mmcblk0p11 /dev/block/param
+    symlink /efs /factory
+    symlink /dev/block/mmcblk0p11 /dev/block/param
+
 
 on post-fs-data
 # we will remap this as /storage/sdcard with the sdcard fuse tool
@@ -68,7 +46,7 @@ on post-fs-data
  # permissions for bluetooth.
     setprop ro.bt.bdaddr_path "/efs/bluetooth/bt_addr"
     chown bluetooth net_bt_stack ro.bt.bdaddr_path
-	chown bluetooth net_bt_stack /dev/ttyS0
+    chown bluetooth net_bt_stack /dev/ttyS0
     chmod 0600 /dev/ttyS0
     chmod 0660 /sys/class/rfkill/rfkill0/state
     chown bluetooth net_bt_stack /sys/class/rfkill/rfkill0/state
@@ -84,6 +62,7 @@ on post-fs-data
 
     chown system system /sys/class/backlight/keypad-led/brightness
     chmod 0660 /sys/class/backlight/keypad-led/brightness
+    chown system system /sys/devices/platform/panel/backlight/panel/brightness
 
     chown system system /sys/class/backlight/touchkey-led/brightness
     chmod 0660 /sys/class/backlight/touchkey-led/brightness
@@ -150,21 +129,16 @@ on post-fs-data
     chmod 0660 /sys/class/input/input2/rept_z  
     chmod 0660 /sys/class/input/input2/odr
 
-# for adb
-    chmod 0775 /system/etc/usbdev.sh
-    chmod 0775 /system/etc/startadb.sh
-
 on boot
 # SISO-ANDR_PERF :: START Changing scheduler to noop during boot
 	setprop sys.io.scheduler noop
 # SISO-ANDR_PERF :: END
 
-	#write /sys/fs/selinux/enforce 0
+    write /sys/fs/selinux/enforce 0
 
     setprop ro.build.product hawaii
     setprop ro.product.device hawaii
-    
-    chown system system /sys/devices/platform/panel/backlight/panel/brightness
+
     mount debugfs /sys/kernel/debug /sys/kernel/debug
 
 # WIFI
@@ -172,7 +146,7 @@ on boot
 
     symlink /dev/block/mmcblk0p11 /dev/block/param
 
-# <Sensors & NFC>
+# <Sensors>
 # Accelerometer_sensor
     chown system radio /dev/accelerometer
     chown system radio /sys/class/sensors/accelerometer_sensor
@@ -218,11 +192,10 @@ on boot
     chmod 0660 /dev/bcm_audio_log
     chown system system /dev/ttyGS0
     chown system system /dev/ttyGS2
-   
     chown system system /dev/ttyS2
     chmod 0770 /dev/ttyS2
 	
-	chmod 0644 /proc/cmdline
+    chmod 0644 /proc/cmdline
 
 # GPS UART
     chown gps system /dev/ttyS1
@@ -359,6 +332,7 @@ on boot
    chown gps radio /sys/class/power_supply/battery/gps
    chown system radio /sys/class/power_supply/battery/wifi
    chown system radio /sys/class/power_supply/battery/lte
+   chown system radio /sys/class/power_supply/battery/lcd
 
 # Thermistor node
     chown radio system /sys/devices/platform/sec-thermistor/temp_adc
@@ -456,7 +430,7 @@ on fs
 	chown radio system /dev/block/mmcblk0p1    
 	chmod 0770 /dev/block/mmcblk0p1
 
-	chmod 6755 /system/xbin/su
+	#chmod 6755 /system/xbin/su
 
 #for ASE application
     mkdir /data/brcm
@@ -486,9 +460,6 @@ on fs
 #   Logging required to save file in /data/brcm for configuration
     mkdir /data/brcm
     chmod 0775 /data/brcm
-
-# Permissions for System Server and daemons.
-    chown system system /sys/devices/platform/panel/backlight/panel/brightness
 
     #for touch fw
     chown system system /sys/class/sec/tsp/cmd
@@ -523,34 +494,18 @@ on fs
 	mkdir /efs/imei 0775 radio system 
 
 on post-fs
-	restorecon_recursive /efs
+    restorecon_recursive /efs
     chown radio system /efs
     chmod 0771 /efs
-		
-# create virtual SD card at /mnt/sdcard, based on the /data/media directory
-# daemon will drop to user/group system/media_rw after initializing
-# underlying files in /data/media will be created with user and group media_rw (1023)
-	service sdcard /system/bin/sdcard -u 1023 -g 1023 -l /data/media /mnt/shell/emulated
-		class late_start	
 
-# fusewrapped external sdcard daemon running as media_rw (1023)
-	service fuse_sdcard1 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/sdcard1 /storage/sdcard1
-		class late_start
-		disabled
-
-#  usbdisk0 sdcard daemon running as media_rw (1023)	
-	#service fuse_usbdisk0 /system/bin/sdcard -u 1023 -g 1023 -d /mnt/media_rw/usbdisk0 /storage/usbdisk0
-	#	class late_start
-	#	disabled
-
-# create filesystem if necessary
-	service setup_fs /system/bin/setup_fs \
-				/dev/block/mmcblk0p15 \
-				/dev/block/mmcblk0p11
-		class core
-		user root
-		group root
-		oneshot
+# Create filesystem if necessary
+#    service setup_fs /system/bin/setup_fs \
+#                /dev/block/mmcblk0p15 \
+#                /dev/block/mmcblk0p11
+#        class core
+#        user root
+#        group root
+#        oneshot
 
 #bosch sensor deamon
 	service sensord /system/bin/sensord
@@ -588,7 +543,7 @@ on post-fs
 		-I/system/etc/wifi/p2p_supplicant_overlay.conf \
 		-e/data/misc/wifi/entropy.bin -puse_p2p_group_interface=1 \
 		-O/data/misc/wifi/sockets -g@android:wpa_wlan0
-	#   we will start as root and wpa_supplicant will switch to user wifi
+	#   We will start as root and wpa_supplicant will switch to user wifi
 	#   after setting up the capabilities required for WEXT
 	#   user wifi
 	#   group wifi inet keystore
@@ -653,13 +608,14 @@ on property:init.svc.macloader=stopped
 # end of wifi
 
 	service gpsd /system/bin/glgps -c /system/etc/gps/glconfig.xml
+		setenv LD_PRELOAD /system/lib/libglgps-compat.so
 		class late_start
 		user gps
 		group system root inet radio wifi sdcard_rw
-
+		
 # Kexec enable
-	service kexec /system/kexec/kexec.sh
-		oneshot
+#	service kexec /system/kexec/kexec.sh
+#		oneshot
 
 # Run bkmgrd automatically on startup
 	service bkmgrd /system/bin/bkmgrd
@@ -670,10 +626,10 @@ on property:init.svc.macloader=stopped
 		group radio system log root
 
 # Run usb_portd to automatically launch atx when USB configuration changes.
-service usb_portd /system/bin/usb_portd
-    class main
-    user system
-    group input vpn net_admin net_raw radio system sdcard_rw log mount
+    service usb_portd /system/bin/usb_portd
+        class main
+        user system
+        group input vpn net_admin net_raw radio system sdcard_rw log mount
 
 #Indicate boot complete to PM to complete PM initialization
 on property:dev.bootcomplete=1

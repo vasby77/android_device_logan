@@ -123,7 +123,7 @@ int ifc_init(void)
 {
     int ret;
     if (ifc_ctl_sock == -1) {
-        ifc_ctl_sock = socket(AF_INET, SOCK_DGRAM, 0);
+        ifc_ctl_sock = socket(AF_INET, SOCK_DGRAM | SOCK_CLOEXEC, 0);
         if (ifc_ctl_sock < 0) {
             printerr("socket() failed: %s\n", strerror(errno));
         }
@@ -137,7 +137,7 @@ int ifc_init(void)
 int ifc_init6(void)
 {
     if (ifc_ctl_sock6 == -1) {
-        ifc_ctl_sock6 = socket(AF_INET6, SOCK_DGRAM, 0);
+        ifc_ctl_sock6 = socket(AF_INET6, SOCK_DGRAM | SOCK_CLOEXEC, 0);
         if (ifc_ctl_sock6 < 0) {
             printerr("socket() failed: %s\n", strerror(errno));
         }
@@ -316,7 +316,7 @@ int ifc_act_on_address(int action, const char *name, const char *address,
     req.n.nlmsg_len = NLMSG_ALIGN(req.n.nlmsg_len) + RTA_LENGTH(addrlen);
     memcpy(RTA_DATA(rta), addr, addrlen);
 
-    s = socket(PF_NETLINK, SOCK_RAW, NETLINK_ROUTE);
+    s = socket(PF_NETLINK, SOCK_RAW | SOCK_CLOEXEC, NETLINK_ROUTE);
     if (send(s, &req, req.n.nlmsg_len, 0) < 0) {
         close(s);
         return -errno;
@@ -421,7 +421,6 @@ int ifc_clear_addresses(const char *name) {
 
 int ifc_set_hwaddr(const char *name, const void *ptr)
 {
-    int r;
     struct ifreq ifr;
     ifc_init_ifr(name, &ifr);
 
@@ -598,26 +597,23 @@ int ifc_disable(const char *ifname)
 int ifc_reset_connections(const char *ifname, const int reset_mask)
 {
 #ifdef HAVE_ANDROID_OS
-    int result = 0, success;
+    int result, success;
     in_addr_t myaddr = 0;
     struct ifreq ifr;
     struct in6_ifreq ifr6;
-    int ctl_sock = -1;
 
     if (reset_mask & RESET_IPV4_ADDRESSES) {
         /* IPv4. Clear connections on the IP address. */
-        ctl_sock = socket(AF_INET, SOCK_DGRAM, 0);
-        if (ctl_sock >= 0) {
-            if (!(reset_mask & RESET_IGNORE_INTERFACE_ADDRESS)) {
-                ifc_get_info(ifname, &myaddr, NULL, NULL);
-            }
-            ifc_init_ifr(ifname, &ifr);
-            init_sockaddr_in(&ifr.ifr_addr, myaddr);
-            result = ioctl(ctl_sock, SIOCKILLADDR,  &ifr);
-            close(ctl_sock);
-        } else {
-            result = -1;
+        ifc_init();
+        if (!(reset_mask & RESET_IGNORE_INTERFACE_ADDRESS)) {
+            ifc_get_info(ifname, &myaddr, NULL, NULL);
         }
+        ifc_init_ifr(ifname, &ifr);
+        init_sockaddr_in(&ifr.ifr_addr, myaddr);
+        result = ioctl(ifc_ctl_sock, SIOCKILLADDR,  &ifr);
+        ifc_close();
+    } else {
+        result = 0;
     }
 
     if (reset_mask & RESET_IPV6_ADDRESSES) {
@@ -627,18 +623,14 @@ int ifc_reset_connections(const char *ifname, const int reset_mask)
          * So we clear all unused IPv6 connections on the device by specifying an
          * empty IPv6 address.
          */
-        ctl_sock = socket(AF_INET6, SOCK_DGRAM, 0);
+        ifc_init6();
         // This implicitly specifies an address of ::, i.e., kill all IPv6 sockets.
         memset(&ifr6, 0, sizeof(ifr6));
-        if (ctl_sock >= 0) {
-            success = ioctl(ctl_sock, SIOCKILLADDR,  &ifr6);
-            if (result == 0) {
-                result = success;
-            }
-            close(ctl_sock);
-        } else {
-            result = -1;
+        success = ioctl(ifc_ctl_sock6, SIOCKILLADDR,  &ifr6);
+        if (result == 0) {
+            result = success;
         }
+        ifc_close6();
     }
 
     return result;
