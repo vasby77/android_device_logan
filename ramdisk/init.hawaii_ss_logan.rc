@@ -5,10 +5,7 @@ on early-init
     mkdir /efs 0771 radio system
 
 on init
-    mkdir /tmp
-    mount tmpfs tmpfs /tmp
-    chmod 1775 /tmp
-
+    
     symlink /sdcard /mnt/sdcard
     symlink /sdcard /storage/sdcard0
 
@@ -133,8 +130,6 @@ on boot
 # SISO-ANDR_PERF :: START Changing scheduler to noop during boot
 	setprop sys.io.scheduler noop
 # SISO-ANDR_PERF :: END
-
-    write /sys/fs/selinux/enforce 0
 
     setprop ro.build.product hawaii
     setprop ro.product.device hawaii
@@ -406,10 +401,6 @@ on boot
 #    write /proc/sys/vm/page-cluster 0	
 		
 on charger
-	#mount ext4 /dev/block/mmcblk0p17 /system ro wait noatime
-    #exec sfsck /dev/block/mmcblk0p19 ext4
-	#mount ext4 /dev/block/mmcblk0p19 /data wait nosuid nodev noatime discard,noauto_da_alloc,journal_async_commit
-
 # Set cpu governor to powersave while in charging mode
     write /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor powersave
     write /sys/devices/system/cpu/cpu1/cpufreq/scaling_governor powersave
@@ -497,15 +488,6 @@ on post-fs
     restorecon_recursive /efs
     chown radio system /efs
     chmod 0771 /efs
-
-# Create filesystem if necessary
-#    service setup_fs /system/bin/setup_fs \
-#                /dev/block/mmcblk0p15 \
-#                /dev/block/mmcblk0p11
-#        class core
-#        user root
-#        group root
-#        oneshot
 
 #bosch sensor deamon
 	service sensord /system/bin/sensord
@@ -613,10 +595,6 @@ on property:init.svc.macloader=stopped
 		user gps
 		group system root inet radio wifi sdcard_rw
 		
-# Kexec enable
-#	service kexec /system/kexec/kexec.sh
-#		oneshot
-
 # Run bkmgrd automatically on startup
 	service bkmgrd /system/bin/bkmgrd
 		class main
@@ -676,23 +654,7 @@ on property:sys.perf.profile=2
 	service battery_charger /charger
 		class charger
 		critical
-		
-#	service playlpm /system/bin/playlpm
-#    	user root
-#		critical
-
-#	service immvibed /system/bin/immvibed 
-#		oneshot
-
-#	service lpmkey /system/bin/lpmkey
-#    	user root
-#		critical
-
-#on charger
-#	start playlpm
-#	start immvibed
-#	start lpmkey		
-		
+				
 on property:ro.dumpstate.dmesg=1
 		write /proc/sys/kernel/dmesg_restrict 0
 	
