@@ -159,8 +159,6 @@ on boot
 	setprop sys.io.scheduler noop
 # SISO-ANDR_PERF :: END
 
-	#write /sys/fs/selinux/enforce 0
-
     setprop ro.build.product hawaii
     setprop ro.product.device hawaii
     
