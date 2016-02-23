@@ -1,1 +1,1 @@
-Replace this files Cm source code
+Diff patch for CyanogenMOD source
