@@ -1,6 +1,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-$(call inherit-product-if-exists, vendor/samsung/logan/logan-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/samsung/loganxx/loganxx-common-vendor.mk)
 
 # Use high-density artwork where available
 PRODUCT_LOCALES += hdpi
@@ -33,6 +33,7 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/keylayouts/bcm_keypad_v2.kl:system/usr/keylayout/bcm_keypad_v2.kl \
 	device/samsung/logan/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/samsung/logan/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
+	
 # Copy Apps
 #PRODUCT_COPY_FILES += \
 #       device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
@@ -132,6 +133,9 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
  	
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
+
+# Texture config.
+include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
 
 $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)

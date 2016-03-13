@@ -1,7 +1,7 @@
 USE_CAMERA_STUB := true
 
 # inherit from the proprietary version
--include vendor/samsung/logan/BoardConfigVendor.mk
+-include vendor/samsung/loganxx/BoardConfigVendor.mk
 
 # Platform
 TARGET_ARCH := arm
@@ -82,9 +82,6 @@ COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DADD_LEGACY_ACQ
 # opengl
 BOARD_USE_BGRA_8888 := true
 
-# Audio
-BOARD_USES_ALSA_AUDIO := true
-
 # Enable dex-preoptimization to speed up the first boot sequence
 # of an SDK AVD. Note that this operation only works on Linux for now
 ifeq ($(HOST_OS),linux)
@@ -119,8 +116,6 @@ COMMON_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 # Recovery
 #TARGET_RECOVERY_INITRC := 
 TARGET_RECOVERY_FSTAB := device/samsung/logan/ramdisk/fstab.hawaii_ss_logan
-BOARD_HAS_NO_SELECT_BUTTON := true
-BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
 BOARD_HAS_NO_MISC_PARTITION := true
