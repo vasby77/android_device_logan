@@ -80,13 +80,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
-        macloader \
-        dhcpcd.conf \
-        hostapd \
-        libnetcmdiface \
-        wpa_supplicant \
-        wpa_supplicant.conf
-	
+	macloader \
+	dhcpcd.conf \
+	hostapd \
+	libnetcmdiface \
+	wpa_supplicant \
+	wpa_supplicant.conf
+
 # GPS/RIL
 PRODUCT_PACKAGES += \
 	libstlport \
@@ -121,21 +121,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	wifi.interface=wlan0 \
 	mobiledata.interfaces=rmnet0 \
 	ro.telephony.ril_class=SamsungBCMRIL \
-        persist.radio.multisim.config=none \
+	persist.radio.multisim.config=none \
 	cm.updater.uri=http://updates.cm-ota.pp.ua \
 	ro.telephony.call_ring.multiple=0 \
 	camera2.portability.force_api=1 \
 	ro.telephony.call_ring=0
-	
+
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
-        persist.sys.usb.config=mtp
- 	
+	persist.sys.usb.config=mtp
+
 # Dalvik heap config
 include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
 
 # Texture config.
-include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
+#include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
 
 $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
