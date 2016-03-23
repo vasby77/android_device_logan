@@ -1,6 +1,6 @@
 $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 
-$(call inherit-product-if-exists, vendor/samsung/loganxx/loganxx-common-vendor.mk)
+$(call inherit-product-if-exists, vendor/samsung/logan/logan-common-vendor.mk)
 
 # Use high-density artwork where available
 PRODUCT_LOCALES += hdpi
