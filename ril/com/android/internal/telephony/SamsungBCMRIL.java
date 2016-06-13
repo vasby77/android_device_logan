@@ -23,7 +23,6 @@ import android.os.AsyncResult;
 import android.os.Message;
 import android.os.Parcel;
 import android.os.SystemProperties;
-import android.telephony.ModemActivityInfo;
 import android.telephony.Rlog;
 import com.android.internal.telephony.RILConstants;
 import java.util.Collections;
@@ -32,21 +31,13 @@ import android.telephony.PhoneNumberUtils;
 import java.util.ArrayList;
 
 /**
- * Custom RIL to handle unique behavior of BCM RIL
+ * Custom RIL to handle unique behavior of D2 radio
  *
  * {@hide}
  */
 public class SamsungBCMRIL extends RIL implements CommandsInterface {
-
-    private static int sEnabledDataSimId = -1;
-
-    public SamsungBCMRIL(Context context, int preferredNetworkType, int cdmaSubscription) {
-        this(context, preferredNetworkType, cdmaSubscription, null);
-    }
-
-    public SamsungBCMRIL(Context context, int preferredNetworkType,
-            int cdmaSubscription, Integer instanceId) {
-        super(context, preferredNetworkType, cdmaSubscription, instanceId);
+    public SamsungBCMRIL(Context context, int networkMode, int cdmaSubscription) {
+        super(context, networkMode, cdmaSubscription);
         mQANElements = 6;
     }
 
@@ -70,72 +61,6 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
         if (RILJ_LOGD) riljLog(rr.serialString() + "> " + requestToString(rr.mRequest));
 
         send(rr);
-    }
-
-    public void setUiccSubscription(int slotId, int appIndex, int subId,
-            int subStatus, Message result) {
-        if (RILJ_LOGD) riljLog("setUiccSubscription" + slotId + " " + appIndex + " " + subId + " " + subStatus);
-
-        // Fake response (note: should be sent before mSubscriptionStatusRegistrants or
-        // SubscriptionManager might not set the readiness correctly)
-        AsyncResult.forMessage(result, 0, null);
-        result.sendToTarget();
-
-        // TODO: Actually turn off/on the radio (and don't fight with the ServiceStateTracker)
-        if (subStatus == 1 /* ACTIVATE */) {
-            // Subscription changed: enabled
-            if (mSubscriptionStatusRegistrants != null) {
-                mSubscriptionStatusRegistrants.notifyRegistrants(
-                        new AsyncResult (null, new int[] {1}, null));
-            }
-        } else if (subStatus == 0 /* DEACTIVATE */) {
-            // Subscription changed: disabled
-            if (mSubscriptionStatusRegistrants != null) {
-                mSubscriptionStatusRegistrants.notifyRegistrants(
-                        new AsyncResult (null, new int[] {0}, null));
-            }
-        }
-    }
-
-    @Override
-    public void setDataAllowed(boolean allowed, Message result) {
-        int simId = mInstanceId == null ? 0 : mInstanceId;
-        if (!allowed) {
-            // Deactivate data call. This happens when switching data SIM
-            // and the framework will wait for data call to be deactivated.
-            // Emulate this by switching to the other SIM.
-            simId = 1 - simId;
-        }
-
-        if (sEnabledDataSimId != simId) {
-            if (RILJ_LOGD) riljLog("Setting data subscription to " + simId);
-            invokeOemRilRequestBrcm((byte) 0, (byte)(0x30 + simId), result);
-            sEnabledDataSimId = simId;
-        } else {
-            if (RILJ_LOGD) riljLog("Data subscription is already set to " + simId);
-            if (result != null) {
-                AsyncResult.forMessage(result, 0, null);
-                result.sendToTarget();
-            }
-        }
-    }
-
-    @Override
-    protected void notifyRegistrantsRilConnectionChanged(int rilVer) {
-        super.notifyRegistrantsRilConnectionChanged(rilVer);
-        if (rilVer != -1) {
-            if (mInstanceId != null) {
-                // Enable simultaneous data/voice on Multi-SIM
-                invokeOemRilRequestBrcm((byte) 3, (byte) 1, null);
-            } else {
-                // Set data subscription to allow data in either SIM slot when using single SIM mode
-                setDataAllowed(true, null);
-            }
-        }
-    }
-
-    private void invokeOemRilRequestBrcm(byte key, byte value, Message response) {
-        invokeOemRilRequestRaw(new byte[] { 'B', 'R', 'C', 'M', key, value }, response);
     }
 
     protected RILRequest
@@ -172,7 +97,7 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_ENTER_SIM_PUK2: ret =  responseInts(p); break;
             case RIL_REQUEST_CHANGE_SIM_PIN: ret =  responseInts(p); break;
             case RIL_REQUEST_CHANGE_SIM_PIN2: ret =  responseInts(p); break;
-            case RIL_REQUEST_ENTER_NETWORK_DEPERSONALIZATION: ret =  responseInts(p); break;
+            case RIL_REQUEST_ENTER_DEPERSONALIZATION_CODE: ret =  responseInts(p); break;
             case RIL_REQUEST_GET_CURRENT_CALLS: ret =  responseCallList(p); break;
             case RIL_REQUEST_DIAL: ret =  responseVoid(p); break;
             case RIL_REQUEST_GET_IMSI: ret =  responseString(p); break;
@@ -191,7 +116,7 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
             case RIL_REQUEST_SWITCH_WAITING_OR_HOLDING_AND_ACTIVE: ret =  responseVoid(p); break;
             case RIL_REQUEST_CONFERENCE: ret =  responseVoid(p); break;
             case RIL_REQUEST_UDUB: ret =  responseVoid(p); break;
-            case RIL_REQUEST_LAST_CALL_FAIL_CAUSE: ret =  responseFailCause(p); break;
+            case RIL_REQUEST_LAST_CALL_FAIL_CAUSE: ret =  responseInts(p); break;
             case RIL_REQUEST_SIGNAL_STRENGTH: ret =  responseSignalStrength(p); break;
             case RIL_REQUEST_VOICE_REGISTRATION_STATE: ret =  responseStrings(p); break;
             case RIL_REQUEST_DATA_REGISTRATION_STATE: ret =  responseStrings(p); break;
@@ -300,14 +225,6 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
             }
         }
 
-        if (rr.mRequest == RIL_REQUEST_SHUTDOWN) {
-            // Set RADIO_STATE to RADIO_UNAVAILABLE to continue shutdown process
-            // regardless of error code to continue shutdown procedure.
-            riljLog("Response to RIL_REQUEST_SHUTDOWN received. Error is " +
-                    error + " Setting Radio State to Unavailable regardless of error.");
-            setRadioState(RadioState.RADIO_UNAVAILABLE);
-        }
-
         // Here and below fake RIL_UNSOL_RESPONSE_SIM_STATUS_CHANGED, see b/7255789.
         // This is needed otherwise we don't automatically transition to the main lock
         // screen when the pin or puk is entered incorrectly.
@@ -331,39 +248,18 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
         }
 
         if (error != 0) {
-            switch (rr.mRequest) {
-                case RIL_REQUEST_GET_RADIO_CAPABILITY: {
-                    // Ideally RIL's would support this or at least give NOT_SUPPORTED
-                    // but the hammerhead RIL reports GENERIC :(
-                    // TODO - remove GENERIC_FAILURE catching: b/21079604
-                    if (REQUEST_NOT_SUPPORTED == error ||
-                            GENERIC_FAILURE == error) {
-                        // we should construct the RAF bitmask the radio
-                        // supports based on preferred network bitmasks
-                        ret = makeStaticRadioCapability();
-                        error = 0;
-                    }
-                    break;
-                }
-                case RIL_REQUEST_GET_ACTIVITY_INFO:
-                    ret = new ModemActivityInfo(0, 0, 0,
-                            new int [ModemActivityInfo.TX_POWER_LEVELS], 0, 0);
-                    error = 0;
-                    break;
-            }
-
-            if (error != 0) rr.onError(error, ret);
+            rr.onError(error, ret);
+            return rr;
         }
-        if (error == 0) {
 
-            if (RILJ_LOGD) riljLog(rr.serialString() + "< " + requestToString(rr.mRequest)
-                    + " " + retToString(rr.mRequest, ret));
+        if (RILJ_LOGD) riljLog(rr.serialString() + "< " + requestToString(rr.mRequest)
+            + " " + retToString(rr.mRequest, ret));
 
-            if (rr.mResult != null) {
-                AsyncResult.forMessage(rr.mResult, ret, null);
-                rr.mResult.sendToTarget();
-            }
+        if (rr.mResult != null) {
+            AsyncResult.forMessage(rr.mResult, ret, null);
+            rr.mResult.sendToTarget();
         }
+
         return rr;
     }
 
@@ -393,7 +289,7 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
             // hack taken from smdk4210ril class
             voiceSettings = p.readInt();
             //printing it to cosole for later investigation
-            Rlog.d(RILJ_LOG_TAG, "Samsung magic = " + voiceSettings);
+            Rlog.d(LOG_TAG, "Samsung magic = " + voiceSettings);
             dc.isVoicePrivacy = (0 != p.readInt());
             dc.number = p.readString();
             int np = p.readInt();
@@ -435,15 +331,5 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
         Collections.sort(response);
 
         return response;
-    }
-
-    @Override
-    public void getRadioCapability(Message response) {
-        riljLog("getRadioCapability: returning static radio capability");
-        if (response != null) {
-            Object ret = makeStaticRadioCapability();
-            AsyncResult.forMessage(response, ret, null);
-            response.sendToTarget();
-        }
     }
 }
