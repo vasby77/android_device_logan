@@ -68,7 +68,11 @@ PRODUCT_PACKAGES += \
 		
 # Gello
 PRODUCT_PACKAGES += \
-    Gello   		
+    Gello
+
+# Snap Camera
+PRODUCT_PACKAGES += \
+    Snap	
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -77,10 +81,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Use 3 threads for Dex2Oat.
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.sys.fw.dex2oat_thread_count=3
-
-# ART
-PRODUCT_PROPERTY_OVERRIDES += \
-        dalvik.vm.dex2oat-flags=--no-watch-dog	
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
@@ -136,7 +136,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp
 
 # Dalvik heap config
-include frameworks/native/build/phone-hdpi-512-dalvik-heap.mk
+include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
 
 # Texture config.
 #include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk

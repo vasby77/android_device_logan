@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 The CyanogenMod Project
+ * Copyright (C) 2015 Pawit Pornkitprasan
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,52 +15,28 @@
  */
 
 #include <stdlib.h>
-#include <malloc.h>
-#include "../upstream-dlmalloc/malloc.c"
+#include <gui/SensorManager.h>
 
-extern "C" int _ZN7android6Parcel13writeString16EPKDsj();
-extern "C" int _ZN7android6Parcel13writeString16EPKtj(){
-	return _ZN7android6Parcel13writeString16EPKDsj();
+namespace android {
+extern "C" {
+
+	void *CRYPTO_malloc(int num, const char *file, int line) {
+	    return malloc(num);
+	}
+
+	SensorManager* _ZN7android9SingletonINS_13SensorManagerEE9sInstanceE = NULL;
+
+	Mutex _ZN7android9SingletonINS_13SensorManagerEE5sLockE(Mutex::PRIVATE);
+
+	void* _ZN7android13SensorManagerC1ERKNS_8String16E(void* obj, const String16& opPackageName);
+	void* _ZN7android13SensorManagerC1Ev(void* obj) {
+	    return _ZN7android13SensorManagerC1ERKNS_8String16E(obj, String16());
+	}
+
+	void* _ZN7android13SensorManager16createEventQueueENS_7String8Ei(void* obj, String8 packageName, int mode);
+	void* _ZN7android13SensorManager16createEventQueueEv(void* obj) {
+	    return _ZN7android13SensorManager16createEventQueueENS_7String8Ei(obj, String8(""), 0);
+	}
+
 }
-
-extern "C" int _ZN7android13SensorManager5sLockE;
-extern "C" int _ZN7android9SingletonINS_13SensorManagerEE5sLockE = _ZN7android13SensorManager5sLockE;
-
-extern "C" int _ZN7android13SensorManager17sPackageInstancesE;
-extern "C" int _ZN7android9SingletonINS_13SensorManagerEE9sInstanceE = _ZN7android13SensorManager17sPackageInstancesE;
-
-extern "C" int _ZN7android13SensorManagerD1Ev();
-extern "C" int _ZN7android13SensorManagerC1Ev(){
-	return _ZN7android13SensorManagerD1Ev();
 }
-
-extern "C" int _ZN7android13SensorManager16createEventQueueENS_7String8Ei();
-extern "C" int _ZN7android13SensorManager16createEventQueueEv(){
-	return _ZN7android13SensorManager16createEventQueueENS_7String8Ei();
-}
-
-extern "C" void *CRYPTO_malloc(int num, const char *file, int line);
-extern "C" void *CRYPTO_malloc(int num, const char *file, int line){
-	if (num <= 0)
-		return NULL;
-	else
-		return dlmalloc(num);
-}
-
-extern "C" void RIL_register_socket();
-extern "C" void RIL_register_socket() {}
-
-extern "C" int MsgHeader_fields = NULL;
-
-extern "C" int RIL_SIM_SAP_DISCONNECT_REQ_fields = NULL;
-
-extern "C" char GetClientData();
-extern "C" char GetClientData() {
-	return NULL;
-}
-
-extern "C" void SetClientData(char);
-extern "C" void SetClientData(char) {}
-
-extern "C" void Connect_RILD_Second();
-extern "C" void Connect_RILD_Second() {}
