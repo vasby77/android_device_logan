@@ -410,7 +410,7 @@ diff -ur CM13.0_loganxx/frameworks/av/media/libstagefright/MediaBufferGroup.cpp 
 diff -ur CM13.0_loganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp CM13.0_loganxx_patched/frameworks/av/media/libstagefright/MPEG4Writer.cpp
 --- CM13.0_loganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-02-25 18:17:20.000000000 +0000
 +++ CM13.0_loganxx_patched/frameworks/av/media/libstagefright/MPEG4Writer.cpp	2016-02-25 19:05:17.000000000 +0000
-@@ -2356,8 +2356,8 @@
+@@ -2370,8 +2370,8 @@
  
          timestampUs -= previousPausedDurationUs;
          if (WARN_UNLESS(timestampUs >= 0ll, "for %s track", trackName)) {
@@ -421,7 +421,7 @@ diff -ur CM13.0_loganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp CM13.
          }
  
          if (!mIsAudio) {
-@@ -2372,8 +2372,8 @@
+@@ -2386,8 +2386,8 @@
              cttsOffsetTimeUs =
                      timestampUs - decodingTimeUs;
              if (WARN_UNLESS(kMaxCttsOffsetTimeUs >= decodingTimeUs - timestampUs, "for %s track", trackName)) {
@@ -432,7 +432,7 @@ diff -ur CM13.0_loganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp CM13.
              }
  
              timestampUs = decodingTimeUs;
-@@ -2384,8 +2384,8 @@
+@@ -2398,8 +2398,8 @@
              currCttsOffsetTimeTicks =
                      (cttsOffsetTimeUs * mTimeScale + 500000LL) / 1000000LL;
              if (WARN_UNLESS(currCttsOffsetTimeTicks <= 0x0FFFFFFFFLL, "for %s track", trackName)) {
@@ -443,7 +443,7 @@ diff -ur CM13.0_loganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp CM13.
              }
  
              if (mStszTableEntries->count() == 0) {
-@@ -2426,8 +2426,8 @@
+@@ -2440,8 +2440,8 @@
          }
  
          if (WARN_UNLESS(timestampUs >= 0ll, "for %s track", trackName)) {
@@ -454,18 +454,22 @@ diff -ur CM13.0_loganxx/frameworks/av/media/libstagefright/MPEG4Writer.cpp CM13.
          }
  
          ALOGV("%s media time stamp: %" PRId64 " and previous paused duration %" PRId64,
-@@ -2447,8 +2447,8 @@
+@@ -2461,10 +2461,10 @@
          if (currDurationTicks < 0ll) {
              ALOGE("timestampUs %" PRId64 " < lastTimestampUs %" PRId64 " for %s track",
                  timestampUs, lastTimestampUs, trackName);
 -            copy->release();
--            return UNKNOWN_ERROR;
+-            err = UNKNOWN_ERROR;
+-            mSource->notifyError(err);
+-            return err;
 +            //copy->release();
-+            //return UNKNOWN_ERROR;
++            //err = UNKNOWN_ERROR;
++            //mSource->notifyError(err);
++            //return err;
          }
  
          // if the duration is different for this sample, see if it is close enough to the previous
-@@ -2546,7 +2546,7 @@
+@@ -2562,7 +2562,7 @@
      }
  
      if (isTrackMalFormed()) {
