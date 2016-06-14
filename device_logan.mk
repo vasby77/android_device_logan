@@ -58,6 +58,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
         ebtables \
         ethertypes
+        
+ # Open-source lights HAL
+PRODUCT_PACKAGES += \
+        lights.hawaii       
    		
 # Misc other modules
 PRODUCT_PACKAGES += \
@@ -76,7 +80,7 @@ PRODUCT_PACKAGES += \
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.ksm.default=1
+        ro.ksm.default=0
 	
 # Use 3 threads for Dex2Oat.
 PRODUCT_PROPERTY_OVERRIDES += \
