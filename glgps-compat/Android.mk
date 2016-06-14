@@ -12,9 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-ifeq ($(TARGET_DEVICE),logan)
-ifeq ($(TARGET_BOARD_PLATFORM),hawaii)
-
 LOCAL_PATH:= $(call my-dir)
 
 include $(CLEAR_VARS)
@@ -28,5 +25,3 @@ LOCAL_C_INCLUDES += \
 	frameworks/native/include/
 include $(BUILD_SHARED_LIBRARY)
 
-endif
-endif
