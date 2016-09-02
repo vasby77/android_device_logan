@@ -74,10 +74,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     Gello
 
-# Snap Camera
-PRODUCT_PACKAGES += \
-    Snap	
-
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.ksm.default=0
