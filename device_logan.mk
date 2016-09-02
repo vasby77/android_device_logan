@@ -34,10 +34,6 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/samsung/logan/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
 	
-# Copy Apps
-#PRODUCT_COPY_FILES += \
-#       device/samsung/baffinlite/MultiSIM-Toggle.apk:system/app/MultiSIM-Toggle.apk
-
 # Charger
 PRODUCT_PACKAGES += \
 	charger_res_images
@@ -77,10 +73,6 @@ PRODUCT_PACKAGES += \
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
         ro.ksm.default=0
-	
-# Use 3 threads for Dex2Oat.
-PRODUCT_PROPERTY_OVERRIDES += \
-        ro.sys.fw.dex2oat_thread_count=3
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
