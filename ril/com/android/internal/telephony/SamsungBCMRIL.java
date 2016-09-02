@@ -39,6 +39,8 @@ import java.util.ArrayList;
 public class SamsungBCMRIL extends RIL implements CommandsInterface {
 
     private static int sEnabledDataSimId = -1;
+	
+	private boolean setPreferredNetworkTypeSeen = false;
 
     public SamsungBCMRIL(Context context, int preferredNetworkType, int cdmaSubscription) {
         this(context, preferredNetworkType, cdmaSubscription, null);
@@ -446,4 +448,17 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
             response.sendToTarget();
         }
     }
+	
+	 @Override
+     public void setPreferredNetworkType(int networkType , Message response) {
+         riljLog("setPreferredNetworkType: " + networkType);
+ 
+         if (!setPreferredNetworkTypeSeen) {
+             riljLog("Need to reboot modem!");
+             setRadioPower(false, null);
+             setPreferredNetworkTypeSeen = true;
+         }
+ 
+         super.setPreferredNetworkType(networkType, response);
+     }
 }
