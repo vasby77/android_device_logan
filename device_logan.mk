@@ -34,9 +34,9 @@ PRODUCT_COPY_FILES += \
 	device/samsung/logan/keylayouts/gpio-keys.kl:system/usr/keylayout/gpio-keys.kl \
 	device/samsung/logan/keylayouts/samsung-keypad.kl:system/usr/keylayout/samsung-keypad.kl
 	
-# Charger
 PRODUCT_PACKAGES += \
-	charger_res_images
+    charger_res_images \
+    cm_charger_res_images
 
 # Insecure ADBD
 ADDITIONAL_DEFAULT_PROPERTIES += \
@@ -72,7 +72,7 @@ PRODUCT_PACKAGES += \
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
-        ro.ksm.default=0
+    ro.ksm.default=0
 	
 # Wi-Fi
 PRODUCT_PACKAGES += \
