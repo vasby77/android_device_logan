@@ -8,6 +8,8 @@ persist.brcm.ap_crash=none
 
 rild.libpath=/system/lib/libbrcm_ril.so
 #rild.libargs=-d /dev/ttyS0
+ro.ril.multi_rat_capable=false
+persist.radio.flexmap_type=nw_mode
 ro.sf.lcd_density=240
 ro.lcd_brightness=160
 ro.lcd_min_brightness=18
