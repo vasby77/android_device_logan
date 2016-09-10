@@ -35,3 +35,8 @@ video.enc.h264.timing_thr2=145
 ro.ril.hsxpa=1
 ro.ril.gprsclass=10
 ro.com.google.gmsversion=4.1_r4
+
+ro.config.max_starting_bg=8
+dalvik.vm.dex2oat-swap=false
+dalvik.vm.dex2oat-flags=--no-watch-dog
+ro.sys.fw.dex2oat_thread_count=4

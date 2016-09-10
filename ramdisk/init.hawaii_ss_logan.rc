@@ -397,8 +397,9 @@ on boot
     chmod 0770 /efs/FactoryApp/serial_no
     chown system system /efs/FactoryApp/serial_no
 	
-# disable swap page clustering -- recommended in https://source.android.com/devices/low-ram.html
-#    write /proc/sys/vm/page-cluster 0	
+	swapon_all fstab.hawaii_ss_logan
+    write /proc/sys/vm/page-cluster 0
+    write /proc/sys/vm/swappiness 100
 		
 on charger
 # Set cpu governor to powersave while in charging mode
@@ -410,7 +411,6 @@ on charger
 			  
 on fs
     mount_all /fstab.hawaii_ss_logan
-#	swapon_all fstab.hawaii_ss_logan
 	
     setprop ro.crypto.fuse_sdcard true
 
