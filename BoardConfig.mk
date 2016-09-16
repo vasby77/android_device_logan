@@ -141,7 +141,7 @@ TARGET_SPECIFIC_HEADER_PATH := device/samsung/logan/include
 BOARD_MTP_DEVICE := /dev/mtp_usb
 
 # jemalloc causes a lot of random crash on free()
-MALLOC_IMPL := dlmalloc
+#MALLOC_IMPL := dlmalloc
 
 # SELinux
 BOARD_SEPOLICY_DIRS += \
