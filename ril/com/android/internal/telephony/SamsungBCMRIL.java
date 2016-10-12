@@ -415,7 +415,7 @@ public class SamsungBCMRIL extends RIL implements CommandsInterface {
                 riljLogv("Incoming UUS : data (string)="
                          + new String(dc.uusInfo.getUserData()));
                 riljLogv("Incoming UUS : data (hex): "
-                         + IccUtils.bytesToHexString(dc.uusInfo.getUserData()));
+                         );
             } else {
                 riljLogv("Incoming UUS : NOT present!");
             }
