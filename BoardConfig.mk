@@ -1,5 +1,5 @@
 USE_CAMERA_STUB := true
-
+USE_NINJA := false
 # inherit from the proprietary version
 -include vendor/samsung/logan/BoardConfigVendor.mk
 
