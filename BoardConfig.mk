@@ -1,6 +1,5 @@
 USE_CAMERA_STUB := true
 USE_NINJA := false
-#TARGET_NO_RECOVERY := true
 
 # inherit from the proprietary version
 -include vendor/samsung/logan/BoardConfigVendor.mk
@@ -121,6 +120,7 @@ BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
 
 # Recovery
 #TARGET_RECOVERY_INITRC := 
+TARGET_NO_RECOVERY := true
 TARGET_RECOVERY_FSTAB := device/samsung/logan/ramdisk/fstab.hawaii_ss_logan
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
