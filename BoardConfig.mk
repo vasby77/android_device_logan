@@ -1,6 +1,6 @@
 USE_CAMERA_STUB := true
 USE_NINJA := false
-TARGET_NO_RECOVERY := true
+#TARGET_NO_RECOVERY := true
 
 # inherit from the proprietary version
 -include vendor/samsung/logan/BoardConfigVendor.mk
