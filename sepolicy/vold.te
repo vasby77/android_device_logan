@@ -1,2 +1,1 @@
 # For fstrim
-allow vold efs_file:dir r_file_perms;
