@@ -6,4 +6,3 @@ allow kernel device:dir { write add_name };
 
 # kcamfwcheck drivers/char/broadcom/vc_cam/vc_cam.c
 allow kernel block_device:dir search;
-allow kernel cam_block_device:blk_file rw_file_perms;
