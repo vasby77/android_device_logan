@@ -17,11 +17,13 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a9
 TARGET_CPU_SMP := true
+ARCH_ARM_HAVE_ARMV7A := true
+ARCH_ARM_HAVE_VFP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
+ARCH_ARM_HAVE_NEON := true
 TARGET_BOOTLOADER_BOARD_NAME := hawaii
-#TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
-#TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp
-
+TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
+TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
 # Assert
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 
@@ -32,7 +34,7 @@ TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/logan
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 
 # PARTITION SIZE
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
