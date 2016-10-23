@@ -1,6 +1,6 @@
 USE_CAMERA_STUB := true
 # USE_NINJA := false
-WITHOUT_CLANG := true
+#WITHOUT_CLANG := true
 #WITHOUT_HOST_CLANG := true
 
 # inherit from the proprietary version
