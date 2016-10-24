@@ -35,6 +35,7 @@ TARGET_KERNEL_SOURCE := kernel/samsung/logan
 #TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
+KERNEL_TOOLCHAIN_PREFIX                     := arm-eabi-
 
 # PARTITION SIZE
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
@@ -121,6 +122,7 @@ TARGET_POWERHAL_VARIANT = cm
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
 #COMMON_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
+BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 
 # Recovery
 #TARGET_RECOVERY_INITRC := 
@@ -142,10 +144,11 @@ BOARD_VOLD_EMMC_SHARES_DEV_MAJOR   := true
 BOARD_VOLD_MAX_PARTITIONS          := 19
 
 # CMHW
-BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
+BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/
 
 # GPS
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/logan/include
+BOARD_GLOBAL_CFLAGS         += -DCOMPAT_SENSORS_M
 
 # MTP
 BOARD_MTP_DEVICE := /dev/mtp_usb
