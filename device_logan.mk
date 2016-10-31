@@ -46,9 +46,12 @@ ADDITIONAL_DEFAULT_PROPERTIES += \
 	
 # Filesystem management tools
 PRODUCT_PACKAGES += \
-        make_ext4fs \
-        e2fsck \
-        setup_fs
+    make_ext4fs \
+    e2fsck \
+    setup_fs \
+    make_f2fs \
+    fsck.f2fs \
+    fibmap.f2fs
     
 # IPv6 tethering
 PRODUCT_PACKAGES += \
