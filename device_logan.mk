@@ -49,7 +49,7 @@ PRODUCT_PACKAGES += \
     make_ext4fs \
     e2fsck \
     setup_fs \
-    make_f2fs \
+    mkfs.f2fs \
     fsck.f2fs \
     fibmap.f2fs
     
@@ -67,8 +67,25 @@ PRODUCT_PACKAGES += \
         audio.a2dp.default \
         audio.usb.default \
         audio.r_submix.default \
-        audio.primary.default
-		
+        audio.primary.default \
+	power.hawaii \
+	libstagefrighthw
+
+# Media
+PRODUCT_PROPERTY_OVERRIDES += \
+    media.stagefright.codecremote=false \
+    media.stagefright.legacyencoder=true \
+    media.stagefright.less-secure=true
+    
+# IPv6 tethering
+PRODUCT_PACKAGES += \
+    ebtables \
+    ethertypes
+    
+# Snap Camera
+PRODUCT_PACKAGES += \
+   Snap
+   
 # Gello
 PRODUCT_PACKAGES += \
     Gello
@@ -76,7 +93,9 @@ PRODUCT_PACKAGES += \
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.ksm.default=0
-	
+# Disable sending usage data
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.nocheckin=1
 # Wi-Fi
 PRODUCT_PACKAGES += \
 	macloader \
@@ -124,23 +143,37 @@ PRODUCT_PROPERTY_OVERRIDES += \
 	ro.telephony.call_ring.multiple=0 \
 	camera2.portability.force_api=1 \
 	ro.telephony.call_ring=0
+	
+# Enable Google-specific location features,
+# like NetworkLocationProvider and LocationCollector
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.com.google.locationfeatures=1 \
+    ro.com.google.networklocation=1
+    # Extended JNI checks:
+# The extended JNI checks will cause the system to run more slowly, but they can spot a variety of nasty bugs 
+# before they have a chance to cause problems.
+# Default=true for development builds, set by android buildsystem
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.kernel.android.checkjni=0 \
+    ro.kernel.checkjni=0 \
+    dalvik.vm.checkjni=false
+    
+# Dex2Oat multi-thread
+PRODUCT_PROPERTY_OVERRIDES += \
+ro.sys.fw.dex2oat_thread_count=2
 
 # MTP
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp
 
 # Dalvik heap config
-$(call inherit-product, frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk)
+include frameworks/native/build/phone-xhdpi-1024-dalvik-heap.mk
 
 # Texture config.
-$(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
+include frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk
 
 $(call inherit-product, hardware/broadcom/wlan/bcmdhd/config/config-bcm.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
-
-ifeq ($(TARGET_BUILD_VARIANT),user)      
-else      
-endif
 
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 PRODUCT_NAME := full_logan
