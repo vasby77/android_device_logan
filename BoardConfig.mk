@@ -1,12 +1,7 @@
 USE_CAMERA_STUB := true
-# USE_NINJA := false
-#WITHOUT_CLANG := true
-#WITHOUT_HOST_CLANG := true
 
 # inherit from the proprietary version
 -include vendor/samsung/logan/BoardConfigVendor.mk
-
-LOCAL_PATH := device/samsung/logan
 
 # Platform
 TARGET_ARCH := arm
@@ -17,28 +12,21 @@ TARGET_CPU_ABI2 := armeabi
 TARGET_ARCH_VARIANT := armv7-a-neon
 TARGET_CPU_VARIANT := cortex-a9
 TARGET_CPU_SMP := true
-ARCH_ARM_HAVE_ARMV7A := true
-ARCH_ARM_HAVE_VFP := true
 ARCH_ARM_HAVE_TLS_REGISTER := true
-ARCH_ARM_HAVE_NEON := true
 TARGET_BOOTLOADER_BOARD_NAME := hawaii
 TARGET_GLOBAL_CFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
 TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -funsafe-math-optimizations
+
 # Assert
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 
-TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
-
 # Kernel
-TARGET_KERNEL_ARCH := arm
-BOARD_DTBTOOL_ARG := -2
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/logan
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
-#TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
-#KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := arm-eabi-
+KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 
 
 # PARTITION SIZE
@@ -87,7 +75,7 @@ BOARD_EGL_WORKAROUND_BUG_10194508 := true
 TARGET_USES_ION := true
 HWUI_COMPILE_FOR_PERF := true
 #TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
-#COMMON_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
+BOARD_GLOBAL_CFLAGS += -DNEEDS_VECTORIMPL_SYMBOLS -DHAWAII_HWC -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 
 # Camera
 #BOARD_USE_METADATABUFFERTYPE := true
@@ -125,12 +113,10 @@ TARGET_POWERHAL_VARIANT = cm
 
 # RIL
 BOARD_RIL_CLASS := ../../../device/samsung/logan/ril/
-#COMMON_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 
 # Recovery
 #TARGET_RECOVERY_INITRC := 
-TARGET_NO_RECOVERY := true
 TARGET_RECOVERY_FSTAB := device/samsung/logan/ramdisk/fstab.hawaii_ss_logan
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_RECOVERY_PIXEL_FORMAT := BGRA_8888
