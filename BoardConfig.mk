@@ -137,7 +137,7 @@ BOARD_HARDWARE_CLASS := hardware/samsung/cmhw/ device/samsung/logan/cmhw/
 
 # GPS
 TARGET_SPECIFIC_HEADER_PATH := device/samsung/logan/include
-
+BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M
 # MTP
 BOARD_MTP_DEVICE := /dev/mtp_usb
 
