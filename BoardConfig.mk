@@ -24,10 +24,11 @@ TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 # Kernel
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
-TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
-TARGET_KERNEL_SOURCE := kernel/samsung/logan
+#TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
+#TARGET_KERNEL_SOURCE := kernel/samsung/logan
 KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.7/bin
 KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
+TARGET_PREBUILT_KERNEL := device/samsung/logan/kernel
 
 # PARTITION SIZE
 BOARD_BOOTIMAGE_PARTITION_SIZE := 8388608
