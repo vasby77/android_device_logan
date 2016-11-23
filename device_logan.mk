@@ -86,8 +86,8 @@ PRODUCT_PACKAGES += \
    Snap
    
 # Gello
-PRODUCT_PACKAGES += \
-    Gello
+# PRODUCT_PACKAGES += \
+#    Gello
 
 # KSM
 PRODUCT_PROPERTY_OVERRIDES += \
