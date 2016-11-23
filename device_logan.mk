@@ -6,6 +6,7 @@ $(call inherit-product-if-exists, vendor/samsung/logan/logan-common-vendor.mk)
 PRODUCT_LOCALES += hdpi
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := hdpi
+PRODUCT_LOCALES := en_GB ru_RU
 
 DEVICE_PACKAGE_OVERLAYS += device/samsung/logan/overlay
 
