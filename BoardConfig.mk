@@ -22,6 +22,7 @@ TARGET_GLOBAL_CPPFLAGS += -mtune=cortex-a9 -mfpu=neon -mfloat-abi=softfp -O3 -fu
 TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 
 # Kernel
+HAS_PREBUILT_KERNEL := true
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 #TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
