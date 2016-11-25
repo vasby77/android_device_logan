@@ -30,7 +30,7 @@ KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/linux-x86/arm/arm-eabi-4.
 KERNEL_TOOLCHAIN_PREFIX := arm-eabi-
 #TARGET_PREBUILT_KERNEL := device/samsung/logan/kernel
 BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-
+BOARD_KERNEL_CMDLINE += androidboot.llcon=1,100,0,0x03200000,24,1280,720,720,8,0xFFFFFF
 # Hack for build
 #$(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
 
