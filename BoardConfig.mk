@@ -24,7 +24,7 @@ TARGET_OTA_ASSERT_DEVICE := logan,S7270,GT-S7270,hawaii
 BOARD_KERNEL_BASE := 0x82000000
 BOARD_KERNEL_PAGESIZE := 4096
 TARGET_KERNEL_CONFIG := bcm21664_hawaii_ss_logan_rev03_cm_defconfig
-TARGET_KERNEL_SOURCE := device/samsung/logan/kernel
+TARGET_KERNEL_SOURCE := kernel/samsung/logan/kernel
 TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6
 
 # PARTITION SIZE
